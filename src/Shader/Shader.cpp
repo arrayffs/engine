@@ -38,7 +38,7 @@ unsigned int shaders::compile_shader(unsigned int SHADER_TYPE, const std::string
   return id;
 }
 
-unsigned int shaders::create_shader(const std::string& vertex_shader, const std::string& fragment_shader)
+unsigned int shaders::create_program(const std::string& vertex_shader, const std::string& fragment_shader)
 {
   unsigned int program = glCreateProgram();
   unsigned int vs = compile_shader(GL_VERTEX_SHADER, vertex_shader);
