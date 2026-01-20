@@ -17,6 +17,7 @@ class ObjectRenderer
   size_t _element_count;
 
 public:
+  ObjectRenderer() = default;
   ObjectRenderer(std::vector<glm::vec3> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path);
 
   void bind();

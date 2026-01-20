@@ -73,12 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\Build\Debug\Bin\</OutDir>
     <IntDir>$(SolutionDir)\Build\Debug\</IntDir>
-    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include</IncludePath>
+    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\Release\Bin</OutDir>
     <IntDir>$(SolutionDir)\Build\Release\</IntDir>
-    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include</IncludePath>
+    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,11 +149,13 @@
   <ItemGroup>
     <ClCompile Include="src\Keyboard\KeybindManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\ObjectRenderer\ObjectLoader.cpp" />
     <ClCompile Include="src\ObjectRenderer\ObjectRenderer.cpp" />
     <ClCompile Include="src\Primitives\BufferArray.cpp" />
     <ClCompile Include="src\Primitives\Program.cpp" />
     <ClCompile Include="src\Primitives\VertexArray.cpp" />
     <ClCompile Include="src\Shader\Shader.cpp" />
+    <ClCompile Include="src\Util\stb.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="Vendor\glm\Include\glm\detail\glm.cpp" />
     <ClCompile Include="Vendor\glm\Include\glm\glm.cppm" />
@@ -166,6 +168,8 @@
     <ClInclude Include="include\GL\glxew.h" />
     <ClInclude Include="include\GL\wglew.h" />
     <ClInclude Include="src\Keyboard\KeybindManager.h" />
+    <ClInclude Include="src\Keyboard\Keybinds.h" />
+    <ClInclude Include="src\ObjectRenderer\ObjectLoader.h" />
     <ClInclude Include="src\ObjectRenderer\ObjectRenderer.h" />
     <ClInclude Include="src\Primitives\BufferArray.h" />
     <ClInclude Include="src\Primitives\Program.h" />
@@ -464,6 +468,7 @@
     <ClInclude Include="Vendor\glm\Include\glm\vec3.hpp" />
     <ClInclude Include="Vendor\glm\Include\glm\vec4.hpp" />
     <ClInclude Include="Vendor\glm\Include\glm\vector_relational.hpp" />
+    <ClInclude Include="Vendor\stb\Include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
