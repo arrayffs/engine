@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 
-ObjectRenderer::ObjectRenderer(std::vector<glm::vec3> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path)
+ObjectRenderer::ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path)
 {
   _vertex_array = VertexArray(indices);
   _buffer_array = BufferArray(positions);
@@ -25,6 +25,13 @@ void ObjectRenderer::render(bool autobind)
   if (autobind)
     bind();
   glDrawElements(GL_TRIANGLES, _element_count, GL_UNSIGNED_INT, nullptr);
+}
+
+void ObjectRenderer::set_uniform_1i(const char* uniform, int i)
+{
+  int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
+  assert(uniform_id != -1);
+  glUniform1i(uniform_id, i);
 }
 
 void ObjectRenderer::set_uniform_4f(const char* uniform, float colors[4])

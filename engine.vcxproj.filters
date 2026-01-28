@@ -51,6 +51,9 @@
     <ClCompile Include="src\Util\stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Primitives\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h">
@@ -975,6 +978,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vendor\stb\Include\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Primitives\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

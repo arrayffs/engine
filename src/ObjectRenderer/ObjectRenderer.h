@@ -18,7 +18,7 @@ class ObjectRenderer
 
 public:
   ObjectRenderer() = default;
-  ObjectRenderer(std::vector<glm::vec3> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path);
+  ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path);
 
   void bind();
   void render(bool autobind = true);
@@ -28,6 +28,7 @@ public:
   unsigned int get_index_buffer_id() { return _vertex_array.get_ib_id(); }
   unsigned int get_program_id() { return _program.get_id(); }
 
+  void set_uniform_1i(const char* uniform, int i);
   void set_uniform_4f(const char* uniform, float colors[4]);
   void set_uniform_mat4(const char* uniform, glm::mat4 mat);
 };

@@ -153,6 +153,7 @@
     <ClCompile Include="src\ObjectRenderer\ObjectRenderer.cpp" />
     <ClCompile Include="src\Primitives\BufferArray.cpp" />
     <ClCompile Include="src\Primitives\Program.cpp" />
+    <ClCompile Include="src\Primitives\Texture.cpp" />
     <ClCompile Include="src\Primitives\VertexArray.cpp" />
     <ClCompile Include="src\Shader\Shader.cpp" />
     <ClCompile Include="src\Util\stb.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="src\ObjectRenderer\ObjectRenderer.h" />
     <ClInclude Include="src\Primitives\BufferArray.h" />
     <ClInclude Include="src\Primitives\Program.h" />
+    <ClInclude Include="src\Primitives\Texture.h" />
     <ClInclude Include="src\Primitives\VertexArray.h" />
     <ClInclude Include="src\Util\Defines.h" />
     <ClInclude Include="src\Shader\Shader.h" />

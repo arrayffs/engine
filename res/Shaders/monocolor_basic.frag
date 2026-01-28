@@ -1,9 +1,11 @@
 #version 330 core
 
-layout(location = 0) out vec4 color;
+in vec2 processed_tex_pos;
 
-uniform vec4 u_Color;
+uniform sampler2D sampler;
+
+out vec4 color;
 
 void main() {
-  color=u_Color;
+  color = texture2D(sampler, processed_tex_pos);
 }

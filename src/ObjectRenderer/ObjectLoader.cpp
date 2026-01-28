@@ -161,11 +161,11 @@ ObjectRenderer object_loader::load_object(const std::string& path)
     }
   }
 
-  ObjectRenderer objr(
+  /*ObjectRenderer objr(
     wavefront._vertex,
     indices,
     "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag"
-  );
+  );*/
 
-  return objr;
+  return {};
 }
