@@ -16,6 +16,8 @@ int main(void)
 {
   if (!window::create_window())
     return -1;
+
+  auto obj = object_loader::load_object("res/Models/cube.obj");
   
   ObjectRenderer obj2(
     {
@@ -36,6 +38,7 @@ int main(void)
       /* top plane */
       4, 5, 6,
       5, 6, 7
+
     },
     "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag"
   );

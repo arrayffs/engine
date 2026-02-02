@@ -2,13 +2,14 @@
 
 #include "../Util/Defines.h"
 
+#include <print>
 #include <fstream>
 #include <glm/glm.hpp>
 
 struct face_t {
   std::string _mat;
-  bool _shaded;
-  std::vector<glm::uvec3> _faces;
+  int _smoothing;
+  std::vector<glm::mat3x3> _faces; // v, vn, vt
 };
 
 struct wavefront_t {
@@ -114,58 +115,82 @@ ObjectRenderer object_loader::load_object(const std::string& path)
       wavefront._texture_vertex.push_back(vertex);
     }
     else if (line.starts_with("s ")) {
-      wavefront._faces.push_back(face_t{ ._shaded = (bool)line[line.size() - 1] });
+      wavefront._faces.push_back(face_t{ ._smoothing = line[line.size() - 1] });
     }
     else if (line.starts_with("usemtl")) {
       wavefront._faces[wavefront._faces.size() - 1]._mat = line.substr(8);
     }
     else if (line.starts_with("f ")) {
       line = line.substr(3);
-      std::vector<glm::uvec3> faces(1, {});
-      size_t i{ 0 };
-      size_t j{ 0 };
-
-      for (char c : line) {
-        if (c == '/')
-          j++;
-        else if (c == ' ' || c == '\n') {
-          faces.push_back({});
-          i++;
+     
+      int it{ 0 };
+      glm::mat3x3 face{};
+      for (char& c : line) {
+        if (c == '/') {
+          it++;
+        } else if (c == ' ') {
+          it = 0;
+          wavefront._faces[wavefront._faces.size() - 1]._faces.push_back(face);
+          face = glm::mat3x3();
         }
         else {
-          switch (j) {
+          int cit = c - '0' - 1;
+          switch (it)
+          {
           case 0:
-            faces[i].x = atoi(std::to_string(c).c_str());
-            break;
-          case 1:
-            faces[i].y = atoi(std::to_string(c).c_str());
+            if (cit >= wavefront._vertex.size()) __debugbreak();
+            face[it] = wavefront._vertex[cit];
             break;
           case 2:
-            faces[i].z = atoi(std::to_string(c).c_str());
+            if (cit >= wavefront._vertex_normal.size()) __debugbreak();
+            face[it] = wavefront._vertex_normal[cit];
+            break;
+          case 1:
+            if (cit >= wavefront._texture_vertex.size()) __debugbreak();
+            face[it] = {
+              wavefront._texture_vertex[cit].x,
+              wavefront._texture_vertex[cit].y,
+              0
+            };
             break;
           }
         }
       }
-
-      auto& _faces = wavefront._faces[wavefront._faces.size() - 1]._faces;
-      _faces.insert(_faces.end(), faces.begin(), faces.end());
     }
   }
 
   std::vector<unsigned int> indices;
+  std::vector<vertex_t> vb;
+  unsigned int it = 0;
   for (auto& faces : wavefront._faces) {
     for (auto& face : faces._faces) {
-      indices.push_back(face.x);
-      indices.push_back(face.y);
-      indices.push_back(face.z);
+      vertex_t v;
+      v._world_pos = face[0];
+      v._tex_pos = { face[2].x, face[2].y };
+      for (unsigned int i = it; i < it + 3; i++) {
+        indices.push_back(i);
+        i++;
+      }
+      it += 3;
+
+      std::println("world_pos: x: {}, y: {}, z: {}", v._world_pos.x, v._world_pos.y, v._world_pos.z);
+      std::println("tex_pos: x: {}, y: {}", v._tex_pos.x, v._tex_pos.y);
+
+      vb.push_back(v);
     }
   }
-
+  
   /*ObjectRenderer objr(
     wavefront._vertex,
     indices,
     "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag"
   );*/
 
-  return {};
+  ObjectRenderer objr(
+    vb,
+    indices, 
+    "", ""
+  );
+
+  return objr;
 }
