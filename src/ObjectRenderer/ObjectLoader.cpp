@@ -9,7 +9,7 @@
 struct face_t {
   std::string _mat;
   int _smoothing;
-  std::vector<glm::mat3x3> _faces; // v, vn, vt
+  std::vector<vertex_t> _faces; // v, vn, vt
 };
 
 struct wavefront_t {
@@ -31,16 +31,16 @@ ObjectRenderer object_loader::load_object(const std::string& path)
 
   for (std::string line; std::getline(file, line);) {
     if (line.starts_with("mtllib ")) {
-      wavefront._material_file = line.substr(8);
+      wavefront._material_file = line.substr(7);
     }
     else if (line.starts_with("o ")) {
-      wavefront._object_name = line.substr(3);
+      wavefront._object_name = line.substr(2);
     }
     else if (line.starts_with("v ")) {
-      line = line.substr(3);
+      line = line.substr(2);
 
       std::string c_buffer;
-      glm::vec3 vertex;
+      glm::vec3 vertex = glm::vec3(0);
       int v_idx{ 0 };
       for (char c : line) {
         if (c != ' ' && c != '\n')
@@ -48,26 +48,25 @@ ObjectRenderer object_loader::load_object(const std::string& path)
         else {
           switch (v_idx) {
           case 0:
-            vertex.x = atoi(c_buffer.c_str());
+            vertex.x = std::stof(c_buffer.c_str());
             break;
           case 1:
-            vertex.y = atoi(c_buffer.c_str());
-            break;
-          case 2:
-            vertex.z = atoi(c_buffer.c_str());
+            vertex.y = std::stof(c_buffer.c_str());
             break;
           }
+          c_buffer = "";
           ++v_idx;
         }
       }
 
+      vertex.z = std::stof(c_buffer.c_str());
       wavefront._vertex.push_back(vertex);
     }
     else if (line.starts_with("vn ")) {
-      line = line.substr(4);
+      line = line.substr(3);
 
       std::string c_buffer;
-      glm::vec3 vertex;
+      glm::vec3 vertex = glm::vec3(0);
       int v_idx{ 0 };
       for (char c : line) {
         if (c != ' ' && c != '\n')
@@ -75,26 +74,25 @@ ObjectRenderer object_loader::load_object(const std::string& path)
         else {
           switch (v_idx) {
           case 0:
-            vertex.x = atoi(c_buffer.c_str());
+            vertex.x = std::stof(c_buffer.c_str());
             break;
           case 1:
-            vertex.y = atoi(c_buffer.c_str());
-            break;
-          case 2:
-            vertex.z = atoi(c_buffer.c_str());
+            vertex.y = std::stof(c_buffer.c_str());
             break;
           }
+          c_buffer = "";
           ++v_idx;
         }
       }
 
+      vertex.z = std::stof(c_buffer.c_str());
       wavefront._vertex_normal.push_back(vertex);
     }
     else if (line.starts_with("vt ")) {
-      line = line.substr(4);
+      line = line.substr(3);
 
       std::string c_buffer;
-      glm::vec2 vertex;
+      glm::vec3 vertex = glm::vec3(0);
       int v_idx{ 0 };
       for (char c : line) {
         if (c != ' ' && c != '\n')
@@ -102,95 +100,74 @@ ObjectRenderer object_loader::load_object(const std::string& path)
         else {
           switch (v_idx) {
           case 0:
-            vertex.x = atoi(c_buffer.c_str());
+            vertex.x = std::stof(c_buffer.c_str());
             break;
           case 1:
-            vertex.y = atoi(c_buffer.c_str());
+            vertex.y = std::stof(c_buffer.c_str());
             break;
           }
+          c_buffer = "";
           ++v_idx;
         }
       }
 
+      vertex.z = std::stof(c_buffer.c_str());
       wavefront._texture_vertex.push_back(vertex);
     }
     else if (line.starts_with("s ")) {
-      wavefront._faces.push_back(face_t{ ._smoothing = line[line.size() - 1] });
+      wavefront._faces.push_back(face_t{ ._smoothing = std::stoi(line.substr(2))});
     }
     else if (line.starts_with("usemtl")) {
-      wavefront._faces[wavefront._faces.size() - 1]._mat = line.substr(8);
+      wavefront._faces[wavefront._faces.size() - 1]._mat = line.substr(7);
     }
     else if (line.starts_with("f ")) {
-      line = line.substr(3);
+      line = line.substr(2);
      
       int it{ 0 };
-      glm::mat3x3 face{};
+      vertex_t face;
+      std::string nbuf{};
       for (char& c : line) {
         if (c == '/') {
-          it++;
-        } else if (c == ' ') {
-          it = 0;
-          wavefront._faces[wavefront._faces.size() - 1]._faces.push_back(face);
-          face = glm::mat3x3();
-        }
-        else {
-          int cit = c - '0' - 1;
+          int cit = atoi(nbuf.c_str()) - 1;
           switch (it)
           {
           case 0:
             if (cit >= wavefront._vertex.size()) __debugbreak();
-            face[it] = wavefront._vertex[cit];
-            break;
-          case 2:
-            if (cit >= wavefront._vertex_normal.size()) __debugbreak();
-            face[it] = wavefront._vertex_normal[cit];
+            face._world_pos = wavefront._vertex[cit];
             break;
           case 1:
             if (cit >= wavefront._texture_vertex.size()) __debugbreak();
-            face[it] = {
-              wavefront._texture_vertex[cit].x,
-              wavefront._texture_vertex[cit].y,
-              0
-            };
+            face._tex_pos = wavefront._texture_vertex[cit];
             break;
           }
+          
+          nbuf = "";
+          it++;
+        } else if (c == ' ') {
+          it = 0;
+          wavefront._faces[wavefront._faces.size() - 1]._faces.push_back(face);
+          face = {};
+          nbuf = "";
+        }
+        else {
+          nbuf.push_back(c);
         }
       }
+
+
+      wavefront._faces[wavefront._faces.size() - 1]._faces.push_back(face);
     }
   }
 
   std::vector<unsigned int> indices;
   std::vector<vertex_t> vb;
   unsigned int it = 0;
-  for (auto& faces : wavefront._faces) {
-    for (auto& face : faces._faces) {
-      vertex_t v;
-      v._world_pos = face[0];
-      v._tex_pos = { face[2].x, face[2].y };
-      for (unsigned int i = it; i < it + 3; i++) {
-        indices.push_back(i);
-        i++;
-      }
-      it += 3;
+  for (auto& faces : wavefront._faces)
+    vb.insert(vb.end(), faces._faces.begin(), faces._faces.end());
 
-      std::println("world_pos: x: {}, y: {}, z: {}", v._world_pos.x, v._world_pos.y, v._world_pos.z);
-      std::println("tex_pos: x: {}, y: {}", v._tex_pos.x, v._tex_pos.y);
-
-      vb.push_back(v);
-    }
-  }
-  
-  /*ObjectRenderer objr(
-    wavefront._vertex,
-    indices,
-    "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag"
-  );*/
-
-  ObjectRenderer objr(
+  return {
     vb,
-    indices, 
-    "", ""
-  );
-
-  return objr;
+    indices,
+    "res/Shaders/monocolor_basic.vert", "res/Shaders.monocolor_basic.frag"
+  };
 }
