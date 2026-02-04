@@ -1,5 +1,5 @@
 #include "ObjectLoader.h"
-
+#include "Triangulation.h"
 #include "../Util/Defines.h"
 
 #include <print>
@@ -165,9 +165,11 @@ ObjectRenderer object_loader::load_object(const std::string& path)
   for (auto& faces : wavefront._faces)
     vb.insert(vb.end(), faces._faces.begin(), faces._faces.end());
 
+  triangulation::delaunay(vb);
+
   return {
     vb,
     indices,
-    "res/Shaders/monocolor_basic.vert", "res/Shaders.monocolor_basic.frag"
+    "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag"
   };
 }

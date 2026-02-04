@@ -56,15 +56,14 @@ int main(void)
 
   view = glm::translate(view, glm::vec3(0.0f, -2.f, -5.f));
 
-  bool lockedin = true;
-  window::set_cursor_lock(false);
+  bool lockedin = false;
+  window::set_cursor_lock(lockedin);
 
   while (!window::should_close()) {
     window::newframe();
   
     obj2.bind();
     texture.bind(GL_TEXTURE0);
-    //glUniform1i(sampler, 0);
 
     {
       if (keybind_manager::key_down(GLFW_KEY_W))

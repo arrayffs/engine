@@ -151,6 +151,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ObjectRenderer\ObjectLoader.cpp" />
     <ClCompile Include="src\ObjectRenderer\ObjectRenderer.cpp" />
+    <ClCompile Include="src\ObjectRenderer\Triangulation.cpp" />
     <ClCompile Include="src\Primitives\BufferArray.cpp" />
     <ClCompile Include="src\Primitives\Program.cpp" />
     <ClCompile Include="src\Primitives\Texture.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="src\Keyboard\Keybinds.h" />
     <ClInclude Include="src\ObjectRenderer\ObjectLoader.h" />
     <ClInclude Include="src\ObjectRenderer\ObjectRenderer.h" />
+    <ClInclude Include="src\ObjectRenderer\Triangulation.h" />
     <ClInclude Include="src\Primitives\BufferArray.h" />
     <ClInclude Include="src\Primitives\Program.h" />
     <ClInclude Include="src\Primitives\Texture.h" />

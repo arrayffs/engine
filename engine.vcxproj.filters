@@ -54,6 +54,9 @@
     <ClCompile Include="src\Primitives\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObjectRenderer\Triangulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h">
@@ -981,6 +984,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Primitives\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectRenderer\Triangulation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
