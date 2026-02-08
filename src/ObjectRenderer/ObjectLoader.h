@@ -3,5 +3,5 @@
 #include "ObjectRenderer.h"
 
 namespace object_loader {
-  ObjectRenderer load_object(const std::string& path);
+  ObjectRenderer load_from_file(const std::string& filepath);
 }

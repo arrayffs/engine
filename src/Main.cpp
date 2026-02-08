@@ -2,8 +2,10 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include <windows.h>
 #include <stb_image.h>
+
+#include <windows.h>
+#include <print>
 
 #include "Keyboard/KeybindManager.h"
 #include "Window/Window.h"
@@ -17,39 +19,9 @@ int main(void)
   if (!window::create_window())
     return -1;
 
-  auto obj = object_loader::load_object("res/Models/cube.obj");
+  ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj");
+  ObjectRenderer monke = object_loader::load_from_file("res/Models/monke.obj");
   
-  ObjectRenderer obj2(
-    {
-      { {-0.5f, -1.f, -0.5f}, {0.f, 0.f} },
-      { { 0.5f, -1.f, -0.5f}, {1.f, 0.f} },
-      { {-0.5f, -1.f,  0.5f}, {0.f, 1.f} },
-      { { 0.5f, -1.f,  0.5f}, {1.f, 1.f} },
-
-      { {-0.5f,  1.f, -0.5f}, {0.f, 0.f} },
-      { { 0.5f,  1.f, -0.5f}, {1.f, 0.f} },
-      { {-0.5f,  1.f,  0.5f}, {0.f, 1.f} },
-      { { 0.5f,  1.f,  0.5f}, {1.f, 1.f} },
-    },
-    {
-      /* bottom plane */
-      0, 1, 2,
-      1, 2, 3,
-      /* top plane */
-      4, 5, 6,
-      5, 6, 7
-
-    },
-    "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag"
-  );
-  /*float obj2_colors[4] = { 1.f, 0.0f, 0.0f, 0.5f };
-  obj2.set_uniform_4f("u_Color", obj2_colors);*/
-
-  obj2.bind();
-  Texture texture(GL_TEXTURE_2D, "res/Textures/blue_ice.png");
-  unsigned int sampler = glGetUniformLocation(obj2.get_program_id(), "sampler");
-  glUniform1i(sampler, 0);
-
   glm::mat4 model = glm::mat4(1.f);
   glm::mat4 view = glm::mat4(1.f);
   glm::mat4 proj = glm::mat4(1.f);
@@ -62,9 +34,6 @@ int main(void)
   while (!window::should_close()) {
     window::newframe();
   
-    obj2.bind();
-    texture.bind(GL_TEXTURE0);
-
     {
       if (keybind_manager::key_down(GLFW_KEY_W))
         view = glm::translate(view, glm::vec3(0.0f, 0.f, 0.1f));
@@ -93,13 +62,10 @@ int main(void)
     }
     
     proj = glm::perspective(glm::radians(90.f), (float)(window::properties::width / window::properties::height), 0.1f, 100.f);
-    
-    obj2.set_uniform_mat4("model", model);
-    obj2.set_uniform_mat4("view", view);
-    obj2.set_uniform_mat4("proj", proj);
 
-    obj2.render(false);
-   
+    //cube.render(model, view, proj);
+    monke.render(model, view, proj);
+ 
     window::render();
     window::poll_events();
   }
