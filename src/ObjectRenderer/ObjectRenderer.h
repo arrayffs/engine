@@ -17,6 +17,7 @@ class ObjectRenderer
   Texture _texture;
 
   size_t _element_count;
+  glm::vec3 _world_pos = glm::vec3(0.f);
 
 public:
   ObjectRenderer() = default;
@@ -31,7 +32,16 @@ public:
   unsigned int get_index_buffer_id() { return _vertex_array.get_ib_id(); }
   unsigned int get_program_id() { return _program.get_id(); }
 
+  void set_pos(glm::vec3 world_pos)
+  {
+	  _world_pos = world_pos;
+	  set_uniform_vec3("offset", _world_pos);
+  }
+
+  glm::vec3 get_pos() const { return _world_pos; }
+
   void set_uniform_1i(const char* uniform, int i);
   void set_uniform_4f(const char* uniform, float colors[4]);
   void set_uniform_mat4(const char* uniform, glm::mat4 mat);
+  void set_uniform_vec3(const char* uniform, glm::vec3 mat);
 };

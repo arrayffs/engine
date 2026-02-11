@@ -14,6 +14,8 @@ ObjectRenderer::ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsi
   _texture = Texture(GL_TEXTURE_2D, texture_path);
   unsigned int sampler = glGetUniformLocation(get_program_id(), "sampler");
   glUniform1i(sampler, 0);
+
+  set_uniform_vec3("offset", _world_pos);
 }
 
 void ObjectRenderer::bind()
@@ -61,4 +63,11 @@ void ObjectRenderer::set_uniform_mat4(const char* uniform, glm::mat4 mat)
   int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
   assert(uniform_id != -1);
   glUniformMatrix4fv(uniform_id, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void ObjectRenderer::set_uniform_vec3(const char* uniform, glm::vec3 mat)
+{
+    int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
+    assert(uniform_id != -1);
+    glUniform3fv(uniform_id, 1, glm::value_ptr(mat));
 }
