@@ -9,6 +9,13 @@
 namespace object_loader {
   Assimp::Importer importer;
 
+  ObjectRenderer load_from_file(const std::string& filepath, glm::vec3 pos)
+  {
+      auto renderer = load_from_file(filepath);
+      renderer.set_pos(pos);
+      return renderer;
+  }
+
   ObjectRenderer load_from_file(const std::string& filepath)
   {
     const aiScene* scene = importer.ReadFile(filepath,

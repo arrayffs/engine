@@ -19,6 +19,7 @@ ObjectRenderer::ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsi
   glm::vec3 light = glm::vec3(0.5f, 0.5f, 0.5f);
   glUniform3fv(light_color, 1, glm::value_ptr(light));
 
+  set_uniform_vec3("offset", _world_pos);
 }
 
 void ObjectRenderer::bind()
@@ -66,4 +67,11 @@ void ObjectRenderer::set_uniform_mat4(const char* uniform, glm::mat4 mat)
   int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
   assert(uniform_id != -1);
   glUniformMatrix4fv(uniform_id, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void ObjectRenderer::set_uniform_vec3(const char* uniform, glm::vec3 mat)
+{
+    int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
+    assert(uniform_id != -1);
+    glUniform3fv(uniform_id, 1, glm::value_ptr(mat));
 }
