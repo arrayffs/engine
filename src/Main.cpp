@@ -62,6 +62,8 @@ int main(void)
     }
     
     proj = glm::perspective(glm::radians(90.f), (float)(window::properties::width / window::properties::height), 0.1f, 100.f);
+    glViewport(0, 0, window::properties::width, window::properties::height);
+    glScissor(0, 0, window::properties::width, window::properties::height);
 
     //cube.render(model, view, proj);
     monke.render(model, view, proj);

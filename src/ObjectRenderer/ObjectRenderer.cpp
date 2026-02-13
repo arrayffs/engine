@@ -14,6 +14,11 @@ ObjectRenderer::ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsi
   _texture = Texture(GL_TEXTURE_2D, texture_path);
   unsigned int sampler = glGetUniformLocation(get_program_id(), "sampler");
   glUniform1i(sampler, 0);
+
+  unsigned int light_color = glGetUniformLocation(get_program_id(), "light_color");
+  glm::vec3 light = glm::vec3(0.5f, 0.5f, 0.5f);
+  glUniform3fv(light_color, 1, glm::value_ptr(light));
+
 }
 
 void ObjectRenderer::bind()
