@@ -33,6 +33,9 @@ bool window::create_window()
 
   glEnable(GL_DEPTH_TEST);
   glfwSetKeyCallback(_window, keybind_manager::key_callback);
+  glfwSetCursorPosCallback(_window, keybind_manager::cursor_position_callback);
+  glfwSetMouseButtonCallback(_window, keybind_manager::mouse_button_callback);
+  glfwSetScrollCallback(_window, keybind_manager::scroll_callback);
 
   return true;
 }

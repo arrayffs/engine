@@ -5,13 +5,15 @@
 #include <GL/glew.h>
 #include <glm/ext.hpp>
 
-ObjectRenderer::ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path, std::string texture_path)
+ObjectRenderer::ObjectRenderer(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path, std::string texture_path)
 {
   _vertex_array = VertexArray(indices);
   _buffer_array = BufferArray(positions);
   _program = Program(vertex_shader_path, fragment_shader_path);
   _element_count = indices.size();
   _texture = Texture(GL_TEXTURE_2D, texture_path);
+  _object_type = object_type;
+
   unsigned int sampler = glGetUniformLocation(get_program_id(), "sampler");
   glUniform1i(sampler, 0);
 
@@ -30,13 +32,6 @@ void ObjectRenderer::bind()
   _texture.bind(GL_TEXTURE0);
 }
 
-void ObjectRenderer::render(bool autobind)
-{
-  if (autobind)
-    bind();
-  glDrawElements(GL_TRIANGLES, _element_count, GL_UNSIGNED_INT, nullptr);
-}
-
 void ObjectRenderer::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj)
 {
   bind();
@@ -45,7 +40,7 @@ void ObjectRenderer::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj)
   set_uniform_mat4("view", view);
   set_uniform_mat4("proj", proj);
 
-  render(false);
+  glDrawElements(GL_TRIANGLES, _element_count, GL_UNSIGNED_INT, nullptr);
 }
 
 void ObjectRenderer::set_uniform_1i(const char* uniform, int i)

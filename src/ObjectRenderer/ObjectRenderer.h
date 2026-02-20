@@ -9,6 +9,11 @@
 #include "../Primitives/Program.h"
 #include "../Primitives/Texture.h"
 
+enum class ObjectType {
+  MODEL,
+  LIGHT
+};
+
 class ObjectRenderer
 {
   BufferArray _buffer_array;
@@ -18,13 +23,13 @@ class ObjectRenderer
 
   size_t _element_count;
   glm::vec3 _world_pos = glm::vec3(0.f);
+  ObjectType _object_type = ObjectType::MODEL;
 
 public:
   ObjectRenderer() = default;
-  ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path, std::string texture_path);
+  ObjectRenderer(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path, std::string texture_path);
 
   void bind();
-  void render(bool autobind = true);
   void render(glm::mat4& model, glm::mat4& view, glm::mat4& proj);
 
   unsigned int get_buffer_array_id() { return _buffer_array.get_id(); }
