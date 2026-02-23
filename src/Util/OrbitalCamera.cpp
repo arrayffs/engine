@@ -1,27 +1,7 @@
 #include "OrbitalCamera.h"
 
-void OrbitalCamera::set_angle(glm::vec2 angle)
+OrbitalCamera::OrbitalCamera(glm::vec3 position, glm::vec3 pivot_point)
+  : _position(position), _pivot_point(pivot_point)
 {
-}
-
-void OrbitalCamera::rotate(glm::vec2 relative_angle)
-{
-}
-
-void OrbitalCamera::set_pos(glm::vec3 position)
-{
-}
-
-void OrbitalCamera::move(glm::vec3 relative_position)
-{
-}
-
-glm::mat4 OrbitalCamera::get_model()
-{
-  return glm::mat4();
-}
-
-glm::mat4 OrbitalCamera::get_view()
-{
-  return glm::mat4();
+  update();
 }

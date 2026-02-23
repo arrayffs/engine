@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Util\OrbitalCamera.cpp" />
     <ClCompile Include="src\Keyboard\KeybindManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ObjectRenderer\ObjectLoader.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Vendor\glm\Include\glm\glm.cppm" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Util\OrbitalCamera.h" />
     <ClInclude Include="include\GLFW\glfw3.h" />
     <ClInclude Include="include\GLFW\glfw3native.h" />
     <ClInclude Include="include\GL\eglew.h" />

@@ -18,5 +18,5 @@ namespace keybind_manager {
   void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
   void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-  void translate(glm::mat4& model, glm::mat4& view, glm::mat4& proj);
+  void translate(glm::mat4& model, glm::mat4& view);
 }

@@ -81,7 +81,7 @@ namespace keybind_manager {
     return g_mouse[GLFW_MOUSE_BUTTON_RIGHT];
   }
 
-  void translate(glm::mat4& model, glm::mat4& view, glm::mat4& proj)
+  void translate(glm::mat4& model, glm::mat4& view)
   {
     { // mouse detach
       static bool cursor_locked = true;
