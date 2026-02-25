@@ -16,13 +16,11 @@ int main(void)
     return -1;
 
   ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj", {-3.f, 0.f, 0.f});
-  ObjectRenderer monke = object_loader::load_from_file("res/Models/monke.obj", {1.f, 0.f, 0.f});
+  ObjectRenderer monke = object_loader::load_from_file("res/Models/monke.obj", {1.f, 0.f, 0.f}, {0.2f, 0.2f, 0.2f});
   
   glm::mat4 model = glm::mat4(1.f);
-  glm::mat4 view = glm::mat4(1.f);
+  glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, -2.f, -5.f));
   glm::mat4 proj = glm::mat4(1.f);
-
-  view = glm::translate(view, glm::vec3(0.0f, -2.f, -5.f));
 
   bool lockedin = false;
   window::set_cursor_lock(lockedin);
@@ -64,7 +62,7 @@ int main(void)
     
     proj = glm::perspective(glm::radians(90.f), (float)(window::properties::width / window::properties::height), 0.1f, 100.f);
 
-    cube.render(model, view, proj);
+    //cube.render(model, view, proj);
     monke.render(model, view, proj);
  
     window::render();

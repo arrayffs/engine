@@ -9,27 +9,21 @@
 namespace object_loader {
   Assimp::Importer importer;
 
-  ObjectRenderer load_from_file(const std::string& filepath, glm::vec3 pos)
+  ObjectRenderer load_from_file(const std::string& filepath, glm::vec3 pos, glm::vec3 scale)
   {
-      auto renderer = load_from_file(filepath);
-      renderer.set_pos(pos);
-      return renderer;
-  }
-
-  ObjectRenderer load_from_file(const std::string& filepath)
-  {
+    importer.SetPropertyBool(AI_CONFIG_PP_FD_REMOVE, true);
     const aiScene* scene = importer.ReadFile(filepath,
-      aiProcess_CalcTangentSpace |
-      aiProcess_Triangulate |
-      aiProcess_JoinIdenticalVertices |
-      aiProcess_SortByPType
+        aiProcess_Triangulate |
+        aiProcess_JoinIdenticalVertices |
+        aiProcess_ImproveCacheLocality |
+        aiProcess_RemoveRedundantMaterials |
+        aiProcess_FlipUVs
     );
 
     if (nullptr == scene) {
       std::println("Asset import failed: {}", importer.GetErrorString());
       return {};
     }
-
 
     std::vector<vertex_t> vertices;
     std::vector<unsigned int> indices;
@@ -39,8 +33,6 @@ namespace object_loader {
 
       for (auto j = 0; j < mesh->mNumVertices; ++j) {
         auto vertex = mesh->mVertices[j];
-        //auto tex_coord = mesh->mTextureCoords[j];
-
         auto vertex_ = vertex_t{
           { vertex.x, vertex.y, vertex.z },
           { }
@@ -63,8 +55,12 @@ namespace object_loader {
       }
     }
     
-    return ObjectRenderer(
-      vertices, indices, "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag", "res/Textures/blue_ice.png"
+    ObjectRenderer object_renderer (
+      vertices, indices, "res/Shaders/monocolor_basic.vert", "res/Shaders/monocolor_basic.frag", "res/Textures/128x_mc_pack/assets/minecraft/textures/block/bedrock.png"
     );
+    object_renderer.set_pos(pos);
+    object_renderer.set_scale(scale);
+
+    return object_renderer;
   }
 }

@@ -18,6 +18,7 @@ class ObjectRenderer
 
   size_t _element_count;
   glm::vec3 _world_pos = glm::vec3(0.f);
+  glm::vec3 _scale = glm::vec3(1.f);
 
 public:
   ObjectRenderer() = default;
@@ -39,6 +40,15 @@ public:
   }
 
   glm::vec3 get_pos() const { return _world_pos; }
+
+  void set_scale(glm::vec3 scale)
+  {
+	  _scale = scale;
+	  set_uniform_vec3("scale", _scale);
+  }
+
+  glm::vec3 get_scale() const { return _scale; }
+
 
   void set_uniform_1i(const char* uniform, int i);
   void set_uniform_4f(const char* uniform, float colors[4]);

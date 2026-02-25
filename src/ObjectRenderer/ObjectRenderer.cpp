@@ -16,6 +16,7 @@ ObjectRenderer::ObjectRenderer(std::vector<vertex_t> positions, std::vector<unsi
   glUniform1i(sampler, 0);
 
   set_uniform_vec3("offset", _world_pos);
+  set_uniform_vec3("scale", { 1.f, 0.5f, 0.5f });
 }
 
 void ObjectRenderer::bind()
