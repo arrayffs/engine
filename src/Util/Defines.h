@@ -3,6 +3,8 @@
 #ifndef _DEFINES_H_
 #define _DEFINES_H_
 
+#pragma warning (disable: 4005 4244)
+
 #ifdef _MSC_VER
 #define assert(x) if (!(x)) __debugbreak();
 #else
