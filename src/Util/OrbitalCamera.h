@@ -22,7 +22,7 @@ public:
   void set_pivot_point(glm::vec3 position);
   void move(glm::vec3 relative_position);
 
-  render_data_t recalculate();
+  void rotate(glm::vec2 angle);
 
   void update();
 
