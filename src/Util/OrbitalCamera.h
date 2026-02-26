@@ -18,9 +18,11 @@ private:
 public:
   OrbitalCamera(glm::vec3 position, glm::vec3 pivot_point);
 
-  void set_rotation(glm::vec2 angle);
-  void rotate(glm::vec2 relative_angle);
+  render_data_t recalculate();
 
-  render_data_t update();
+  render_data_t set_rotation(glm::vec2 angle);
+  render_data_t rotate(glm::vec2 relative_angle);
+
+  render_data_t get_data();
 };
 
