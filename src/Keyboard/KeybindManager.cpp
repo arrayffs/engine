@@ -1,6 +1,7 @@
 #include "KeybindManager.h"
 
 #include "../Window/Window.h"
+#include "../Util/OrbitalCamera.h"
 
 #include <glm/ext.hpp>
 
@@ -81,8 +82,10 @@ namespace keybind_manager {
     return g_mouse[GLFW_MOUSE_BUTTON_RIGHT];
   }
 
-  void translate(glm::mat4& model, glm::mat4& view)
+  void translate(glm::mat4& model)
   {
+    static auto orbital_camera = OrbitalCamera::get_instance();
+
     { // mouse detach
       static bool cursor_locked = true;
       if (keybind_manager::keypress(GLFW_KEY_ESCAPE)) {
@@ -104,9 +107,10 @@ namespace keybind_manager {
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
           glm::vec2 diff = current_point - last_point;
-          model = glm::rotate(model, glm::radians(1.f * diff.x), glm::vec3(0.f, 1.f, 0.f));
-          model = glm::rotate(model, glm::radians(1.f * diff.y), glm::vec3(1.f, 0.f, 0.f));
+          /*model = glm::rotate(model, glm::radians(1.f * diff.x), glm::vec3(0.f, 1.f, 0.f));
+          model = glm::rotate(model, glm::radians(1.f * diff.y), glm::vec3(1.f, 0.f, 0.f));*/
 
+          orbital_camera->rotate(diff);
           
           last_point = current_point;
         }
@@ -125,8 +129,7 @@ namespace keybind_manager {
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
           glm::vec2 diff = current_point - last_point;
-          view = glm::translate(view, glm::vec3(0.0f, -0.1f * diff.y, 0.0f));
-          view = glm::translate(view, glm::vec3(0.1f * diff.x, 0.f, 0.0f));
+          orbital_camera->move({ 0.1f * diff.x, -0.1f * diff.y, 0.f });
 
           last_point = current_point;
         }
@@ -134,7 +137,7 @@ namespace keybind_manager {
       else if (pressed) pressed = false;
     }
 
-
+    /*
     { // zoom
       static float last_scroll = 0.f;
       if (g_total_scroll.y != last_scroll) {
@@ -142,7 +145,9 @@ namespace keybind_manager {
         last_scroll = g_total_scroll.y;
 
         view = glm::translate(view, glm::vec3(0.f, 0.f, 0.5f * diff));
+
       }
     }
+    */
   }
 }

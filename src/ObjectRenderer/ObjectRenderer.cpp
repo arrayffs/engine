@@ -22,6 +22,7 @@ ObjectRenderer::ObjectRenderer(ObjectType object_type, std::vector<vertex_t> pos
   glUniform3fv(light_color, 1, glm::value_ptr(light));
 
   set_uniform_vec3("offset", _world_pos);
+  set_uniform_vec3("scale", { 1.f, 0.5f, 0.5f });
 }
 
 void ObjectRenderer::bind()

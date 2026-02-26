@@ -18,11 +18,13 @@ namespace object_loader {
 
   ObjectRenderer load_from_file(const std::string& filepath, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
   {
+    importer.SetPropertyBool(AI_CONFIG_PP_FD_REMOVE, true);
     const aiScene* scene = importer.ReadFile(filepath,
-      aiProcess_CalcTangentSpace |
-      aiProcess_Triangulate |
-      aiProcess_JoinIdenticalVertices |
-      aiProcess_SortByPType
+        aiProcess_Triangulate |
+        aiProcess_JoinIdenticalVertices |
+        aiProcess_ImproveCacheLocality |
+        aiProcess_RemoveRedundantMaterials |
+        aiProcess_FlipUVs
     );
 
     if (nullptr == scene) {
@@ -38,8 +40,6 @@ namespace object_loader {
 
       for (unsigned int j = 0; j < mesh->mNumVertices; ++j) {
         auto vertex = mesh->mVertices[j];
-        //auto tex_coord = mesh->mTextureCoords[j];
-
         auto vertex_ = vertex_t{
           { vertex.x, vertex.y, vertex.z },
           { }

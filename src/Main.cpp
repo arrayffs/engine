@@ -10,6 +10,7 @@
 
 #include "ObjectRenderer/ObjectLoader.h"
 #include "Primitives/Texture.h"
+#include "Util/OrbitalCamera.h"
 
 int main(void)
 {
@@ -26,17 +27,24 @@ int main(void)
   bool lockedin = false;
   window::set_cursor_lock(lockedin);
 
+  auto orbital_camera = OrbitalCamera::get_instance();
+  orbital_camera->set_position({ 0.f, -2.f, -5.f });
+  orbital_camera->set_pivot_point({ 0.f, 0.f, 0.f });
+
+  
+
   while (!window::should_close()) {
     window::newframe();
   
-    keybind_manager::translate(model, view, proj);
-    
+    keybind_manager::translate(model);
+    view = orbital_camera->get_view();
+
     // window resizing, i don't think this works in any way, shape or form.
     proj = glm::perspective(glm::radians(90.f), (float)(window::properties::width / window::properties::height), 0.1f, 100.f);
     glViewport(0, 0, window::properties::width, window::properties::height);
     glScissor(0, 0, window::properties::width, window::properties::height);
 
-    cube.render(model, view, proj);
+    //cube.render(model, view, proj);
     monke.render(model, view, proj);
  
     window::render();
