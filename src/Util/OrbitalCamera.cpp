@@ -13,7 +13,7 @@ void OrbitalCamera::set_pivot_point(glm::vec3 position)
   update();
 }
 
-void OrbitalCamera::move(glm::vec2 relative_position)
+void OrbitalCamera::move(glm::vec3 relative_position)
 {
   _position += relative_position;
   _pivot_point += relative_position;

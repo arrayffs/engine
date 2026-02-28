@@ -19,7 +19,7 @@ public:
 
   void set_position(glm::vec3 position);
   void set_pivot_point(glm::vec3 position);
-  void move(glm::vec2 relative_position);
+  void move(glm::vec3 relative_position);
   void zoom(float relative_zoom);
   void set_zoom(float zoom);
 
