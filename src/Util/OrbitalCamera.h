@@ -16,16 +16,18 @@ private:
 
 public:
   OrbitalCamera() = default;
-  //OrbitalCamera(glm::vec3 position, glm::vec3 pivot_point);
 
   void set_position(glm::vec3 position);
   void set_pivot_point(glm::vec3 position);
-  void move(glm::vec3 relative_position);
+  void move(glm::vec2 relative_position);
+  void zoom(float relative_zoom);
+  void set_zoom(float zoom);
 
   void rotate(glm::vec2 angle);
 
   void update();
 
   glm::mat4 get_view() const { return _view; }
+  glm::vec3 pivot_position() const { return _pivot_point; }
 };
 

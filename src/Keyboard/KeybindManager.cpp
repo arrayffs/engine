@@ -88,6 +88,12 @@ namespace keybind_manager {
 
     { // mouse detach
       static bool cursor_locked = true;
+      static bool init = false;
+      if (!init) {
+        init = true;
+        window::set_cursor_lock(cursor_locked);
+      }
+
       if (keybind_manager::keypress(GLFW_KEY_ESCAPE)) {
         cursor_locked = !cursor_locked;
         window::set_cursor_lock(cursor_locked);
@@ -106,9 +112,7 @@ namespace keybind_manager {
         }
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
-          glm::vec2 diff = current_point - last_point;
-          /*model = glm::rotate(model, glm::radians(1.f * diff.x), glm::vec3(0.f, 1.f, 0.f));
-          model = glm::rotate(model, glm::radians(1.f * diff.y), glm::vec3(1.f, 0.f, 0.f));*/
+          glm::vec2 diff = (current_point - last_point) / -360.f;
 
           orbital_camera->rotate(diff);
           
@@ -118,7 +122,8 @@ namespace keybind_manager {
       else if (pressed) pressed = false;
     }
     
-    { // move
+    /*
+    { // move - temporarily unavailable bcs i can't seem to fix a bug
       static bool pressed = false;
       static glm::vec2 last_point = glm::vec2(0.f);
       if (keybind_manager::mmb_down()) {
@@ -129,25 +134,25 @@ namespace keybind_manager {
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
           glm::vec2 diff = current_point - last_point;
-          orbital_camera->move({ 0.1f * diff.x, -0.1f * diff.y, 0.f });
+          orbital_camera->move({ 0.1f * diff.x, -0.1f * diff.y });
 
           last_point = current_point;
         }
       }
       else if (pressed) pressed = false;
     }
+    */
 
-    /*
     { // zoom
       static float last_scroll = 0.f;
       if (g_total_scroll.y != last_scroll) {
         float diff = g_total_scroll.y - last_scroll;
         last_scroll = g_total_scroll.y;
 
-        view = glm::translate(view, glm::vec3(0.f, 0.f, 0.5f * diff));
+        //view = glm::translate(view, glm::vec3(0.f, 0.f, 0.5f * diff));
+        orbital_camera->zoom(diff);
 
       }
     }
-    */
   }
 }
