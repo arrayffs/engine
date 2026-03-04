@@ -49,6 +49,10 @@ namespace object_loader {
           auto& uv = mesh->mTextureCoords[0][j];
           vertex_._tex_pos = { uv.x, uv.y };
         }
+        
+        if (mesh->HasNormals()) {
+          vertex_._normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
+        }
 
         vertices.push_back(vertex_);
       }

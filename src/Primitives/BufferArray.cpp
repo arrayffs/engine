@@ -12,6 +12,10 @@ BufferArray::BufferArray(std::vector<vertex_t> positions) {
 
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, _tex_pos));
+
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, _normal));
+
 }
 
 void BufferArray::bind() {

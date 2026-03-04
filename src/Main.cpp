@@ -40,8 +40,6 @@ int main(void)
     glViewport(0, 0, window::properties::width, window::properties::height);
     glScissor(0, 0, window::properties::width, window::properties::height);
 
-    cube.set_pos(orbital_camera->pivot_position());
-    cube.render(model, view, proj);
     monke.render(model, view, proj);
  
     window::render();

@@ -1,12 +1,18 @@
 #version 330 core
 
-in vec2 processed_tex_pos;
+in vec3 in_frag_pos;
+in vec2 in_processed_tex_pos;
+in vec3 in_normal;
 
-uniform sampler2D sampler;
-uniform vec3 light_color;
+uniform sampler2D u_sampler;
+uniform vec3 u_light_color;
+uniform vec3 u_light_source;
 
-out vec4 color;
+out vec4 out_color;
 
 void main() {
-  color = texture2D(sampler, processed_tex_pos) * vec4(light_color, 1.0);
+  vec3 normal = normalize(in_normal);
+  vec3 light_direction = normalize(u_light_source - in_frag_pos);
+
+  out_color = texture2D(u_sampler, in_processed_tex_pos) * vec4(u_light_color, 1.0);
 }

@@ -18,7 +18,7 @@ ObjectRenderer::ObjectRenderer(ObjectType object_type, std::vector<vertex_t> pos
   glUniform1i(sampler, 0);
 
   unsigned int light_color = glGetUniformLocation(get_program_id(), "light_color");
-  glm::vec3 light = glm::vec3(0.5f, 0.5f, 0.5f);
+  glm::vec3 light = glm::vec3(1.f, 1.f, 1.f);
   glUniform3fv(light_color, 1, glm::value_ptr(light));
 
   set_uniform_vec3("offset", _world_pos);

@@ -16,6 +16,7 @@
 struct vertex_t {
   glm::vec3 _world_pos;
   glm::vec2 _tex_pos;
+  glm::vec3 _normal;
 };
 
 #endif // !_DEFINES_H_
