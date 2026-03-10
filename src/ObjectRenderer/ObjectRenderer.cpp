@@ -2,7 +2,7 @@
 
 #include "../Util/Defines.h"
 
-#include <GL/glew.h>
+#include "../Util/GLConfig.h"
 #include <glm/ext.hpp>
 
 ObjectRenderer::ObjectRenderer(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path, std::string texture_path)
@@ -14,15 +14,15 @@ ObjectRenderer::ObjectRenderer(ObjectType object_type, std::vector<vertex_t> pos
   _texture = Texture(GL_TEXTURE_2D, texture_path);
   _object_type = object_type;
 
-  unsigned int sampler = glGetUniformLocation(get_program_id(), "sampler");
+  unsigned int sampler = glGetUniformLocation(get_program_id(), "u_sampler");
   glUniform1i(sampler, 0);
 
-  unsigned int light_color = glGetUniformLocation(get_program_id(), "light_color");
+  unsigned int light_color = glGetUniformLocation(get_program_id(), "u_light_color");
   glm::vec3 light = glm::vec3(1.f, 1.f, 1.f);
   glUniform3fv(light_color, 1, glm::value_ptr(light));
 
-  set_uniform_vec3("offset", _world_pos);
-  set_uniform_vec3("scale", { 1.f, 0.5f, 0.5f });
+  set_uniform_vec3("u_offset", _world_pos);
+  set_uniform_vec3("u_scale", { 1.f, 0.5f, 0.5f });
 }
 
 void ObjectRenderer::bind()
@@ -37,9 +37,9 @@ void ObjectRenderer::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj)
 {
   bind();
 
-  set_uniform_mat4("model", model);
-  set_uniform_mat4("view", view);
-  set_uniform_mat4("proj", proj);
+  set_uniform_mat4("u_model", model);
+  set_uniform_mat4("u_view", view);
+  set_uniform_mat4("u_proj", proj);
 
   glDrawElements(GL_TRIANGLES, _element_count, GL_UNSIGNED_INT, nullptr);
 }

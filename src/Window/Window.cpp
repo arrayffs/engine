@@ -1,8 +1,7 @@
 #include "Window.h"
 #include "../Keyboard/KeybindManager.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "../Util/GLConfig.h"
 
 #include <print>
 #include <string>
@@ -11,8 +10,10 @@ GLFWwindow* _window;
 
 bool window::create_window()
 {
-  if (!glfwInit())
+  if (!glfwInit()) {
+    std::println("GLFW Could not initialize");
     return false;
+  }
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -20,16 +21,25 @@ bool window::create_window()
 
   _window = glfwCreateWindow(properties::width, properties::height, "autistic engine", NULL, NULL);
   if (!_window) {
+    std::println("glfwCreateWindow() failed.");
     glfwTerminate();
     return false;
   }
 
   glfwMakeContextCurrent(_window);
-  glfwSwapInterval(1);
+  glfwSwapInterval(0);
+#ifdef __unix__
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    std::println("Failed to initialize GLAD");
+    return false;
+  }
+#else
   if (glewInit() != GLEW_OK) {
+    std::println("GLEW Error: {}", (const char*)glewGetErrorString(err));
     glfwTerminate();
     return false;
   }
+#endif
 
   glEnable(GL_DEPTH_TEST);
   glfwSetKeyCallback(_window, keybind_manager::key_callback);

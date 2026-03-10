@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-#include <GL/glew.h>
+#include "../Util/GLConfig.h"
 
 VertexArray::VertexArray(std::vector<unsigned int> ib_indices)
 {

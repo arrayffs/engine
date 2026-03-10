@@ -1,6 +1,6 @@
 #include "BufferArray.h"
 
-#include <GL/glew.h>
+#include "../Util/GLConfig.h"
 
 BufferArray::BufferArray(std::vector<vertex_t> positions) {
   glGenBuffers(1, &_buffer_array);

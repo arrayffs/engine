@@ -2,7 +2,7 @@
 
 #include "../Shader/Shader.h"
 
-#include <GL/glew.h>
+#include "../Util/GLConfig.h"
 
 Program::Program(const std::string& vs_path, const std::string& fs_path)
 {

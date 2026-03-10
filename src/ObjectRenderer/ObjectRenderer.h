@@ -41,7 +41,7 @@ public:
   void set_pos(glm::vec3 world_pos)
   {
 	  _world_pos = world_pos;
-	  set_uniform_vec3("offset", _world_pos);
+	  set_uniform_vec3("u_offset", _world_pos);
   }
 
   glm::vec3 get_pos() const { return _world_pos; }
@@ -49,7 +49,7 @@ public:
   void set_scale(glm::vec3 scale)
   {
 	  _scale = scale;
-	  set_uniform_vec3("scale", _scale);
+	  set_uniform_vec3("u_scale", _scale);
   }
 
   glm::vec3 get_scale() const { return _scale; }

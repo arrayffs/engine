@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-#include <GL/glew.h>
+#include "../Util/GLConfig.h"
 
 #include <stdexcept>
 #include <fstream>
