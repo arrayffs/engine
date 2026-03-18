@@ -156,6 +156,7 @@
     <ClCompile Include="src\Primitives\Texture.cpp" />
     <ClCompile Include="src\Primitives\VertexArray.cpp" />
     <ClCompile Include="src\Shader\Shader.cpp" />
+    <ClCompile Include="src\Terrain\Terrain.cpp" />
     <ClCompile Include="src\Util\OrbitalCamera.cpp" />
     <ClCompile Include="src\Util\stb.cpp" />
     <ClCompile Include="src\Window\DebugWindow.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="src\Primitives\Program.h" />
     <ClInclude Include="src\Primitives\Texture.h" />
     <ClInclude Include="src\Primitives\VertexArray.h" />
+    <ClInclude Include="src\Terrain\Terrain.h" />
     <ClInclude Include="src\Util\Defines.h" />
     <ClInclude Include="src\Shader\Shader.h" />
     <ClInclude Include="src\Util\OrbitalCamera.h" />
