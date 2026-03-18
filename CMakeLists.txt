@@ -53,6 +53,7 @@ target_include_directories(engine PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/glm/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/stb/Include
     ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/glad/Include
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/imgui/Include
 )
 
 target_link_libraries(engine PRIVATE
@@ -60,10 +61,10 @@ target_link_libraries(engine PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/GLFW/libglfw3.a
     ${CMAKE_CURRENT_SOURCE_DIR}/Vendor/assimp/libassimp.a
     minizip
-    z       # Fixes the Assimp "uncompress/inflate" errors
-    GL      # Required for OpenGL functions
-    X11     # Required by GLFW
-    pthread # Required by GLFW/Assimp
-    dl      # Required for GLAD/GLEW/GLFW to load drivers
-    m       # Math library (often required by GLM/Assimp)
+    z
+    GL
+    X11
+    pthread
+    dl
+    m
 )

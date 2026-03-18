@@ -21,4 +21,6 @@ struct vertex_t {
   glm::vec3 _normal;
 };
 
+typedef long long ll;
+
 #endif // !_DEFINES_H_

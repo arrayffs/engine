@@ -73,13 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\Build\Debug\Bin\</OutDir>
     <IntDir>$(SolutionDir)\Build\Debug\</IntDir>
-    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\;$(SolutionDir)\Vendor\assimp\Include\</IncludePath>
+    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\;$(SolutionDir)\Vendor\assimp\Include\;$(SolutionDir)\Vendor\imgui\Include\</IncludePath>
     <LibraryPath>$(SolutionDir)\res\Dll\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\Release\Bin</OutDir>
     <IntDir>$(SolutionDir)\Build\Release\</IntDir>
-    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\;$(SolutionDir)\Vendor\assimp\Include\</IncludePath>
+    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\;$(SolutionDir)\Vendor\assimp\Include\;$(SolutionDir)\Vendor\imgui\Include\</IncludePath>
     <LibraryPath>$(SolutionDir)\res\Dll\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -158,9 +158,17 @@
     <ClCompile Include="src\Shader\Shader.cpp" />
     <ClCompile Include="src\Util\OrbitalCamera.cpp" />
     <ClCompile Include="src\Util\stb.cpp" />
+    <ClCompile Include="src\Window\DebugWindow.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
     <ClCompile Include="Vendor\glm\Include\glm\detail\glm.cpp" />
     <ClCompile Include="Vendor\glm\Include\glm\glm.cppm" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui.cpp" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="Vendor\imgui\Include\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h" />
@@ -181,6 +189,7 @@
     <ClInclude Include="src\Shader\Shader.h" />
     <ClInclude Include="src\Util\OrbitalCamera.h" />
     <ClInclude Include="src\Util\Singleton.h" />
+    <ClInclude Include="src\Window\DebugWindow.h" />
     <ClInclude Include="src\Window\Window.h" />
     <ClInclude Include="Vendor\assimp\Include\assimp\aabb.h" />
     <ClInclude Include="Vendor\assimp\Include\assimp\ai_assert.h" />
@@ -561,6 +570,15 @@
     <ClInclude Include="Vendor\GL\Include\GL\glew.h" />
     <ClInclude Include="Vendor\GL\Include\GL\glxew.h" />
     <ClInclude Include="Vendor\GL\Include\GL\wglew.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imconfig.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imgui.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imgui_internal.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imstb_textedit.h" />
+    <ClInclude Include="Vendor\imgui\Include\imgui\imstb_truetype.h" />
     <ClInclude Include="Vendor\stb\Include\stb_image.h" />
   </ItemGroup>
   <ItemGroup>

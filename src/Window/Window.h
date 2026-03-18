@@ -1,5 +1,10 @@
 #pragma once
 
+#include "../Util/GLConfig.h"
+
+#include <imgui/imgui.h>
+
+
 namespace window {
   bool create_window();
   
@@ -14,5 +19,7 @@ namespace window {
   namespace properties {
     inline float width = 1800.f;
     inline float height = 900.f;
+
+    inline GLFWwindow* _handle;
   }
 }

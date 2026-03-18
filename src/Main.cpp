@@ -4,6 +4,7 @@
 
 #include "Keyboard/KeybindManager.h"
 #include "Window/Window.h"
+#include "Window/DebugWindow.h"
 
 #include "ObjectRenderer/ObjectLoader.h"
 #include "Util/OrbitalCamera.h"
@@ -13,7 +14,7 @@ int main(void)
   if (!window::create_window())
     return -1;
 
-  ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj", {-3.f, 0.f, 0.f}, "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
+  ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj", {0.f, 0.f, 0.f}, "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
   ObjectRenderer monke = object_loader::load_from_file("res/Models/monke.obj", {1.f, 0.f, 0.f}, "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
   
   glm::mat4 model = glm::mat4(1.f);
@@ -24,6 +25,9 @@ int main(void)
   orbital_camera->set_position({ 0.f, -2.f, -5.f });
   orbital_camera->set_pivot_point({ 0.f, 0.f, 0.f });
 
+#ifdef _DEBUG
+  debug_window::init();
+#endif
 
   while (!window::should_close()) {
     window::newframe();
@@ -37,10 +41,26 @@ int main(void)
     glScissor(0, 0, window::properties::width, window::properties::height);
 
     cube.render(model, view, proj);
- 
+
+#ifdef _DEBUG
+    debug_window::new_frame();
+
+    ImGui::Begin("Tet window");
+
+    ImGui::Text("hayaa");
+
+    ImGui::End();
+
+    debug_window::render();
+#endif
+
     window::render();
     window::poll_events();
   }
+
+#ifdef _DEBUG
+  debug_window::exit();
+#endif
 
   glfwTerminate();
   return 0;

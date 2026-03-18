@@ -1,12 +1,10 @@
 #include "Window.h"
 #include "../Keyboard/KeybindManager.h"
 
-#include "../Util/GLConfig.h"
-
 #include <print>
 #include <string>
 
-GLFWwindow* _window;
+using namespace window::properties;
 
 bool window::create_window()
 {
@@ -19,14 +17,14 @@ bool window::create_window()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-  _window = glfwCreateWindow(properties::width, properties::height, "autistic engine", NULL, NULL);
-  if (!_window) {
+  _handle = glfwCreateWindow(properties::width, properties::height, "autistic engine", NULL, NULL);
+  if (!_handle) {
     std::println("glfwCreateWindow() failed.");
     glfwTerminate();
     return false;
   }
 
-  glfwMakeContextCurrent(_window);
+  glfwMakeContextCurrent(_handle);
   glfwSwapInterval(0);
 #ifdef __unix__
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -35,24 +33,24 @@ bool window::create_window()
   }
 #else
   if (glewInit() != GLEW_OK) {
-    std::println("GLEW Error: {}", (const char*)glewGetErrorString(err));
+    //std::println("GLEW Error: {}", (const char*)glewGetErrorString(err));
     glfwTerminate();
     return false;
   }
 #endif
 
   glEnable(GL_DEPTH_TEST);
-  glfwSetKeyCallback(_window, keybind_manager::key_callback);
-  glfwSetCursorPosCallback(_window, keybind_manager::cursor_position_callback);
-  glfwSetMouseButtonCallback(_window, keybind_manager::mouse_button_callback);
-  glfwSetScrollCallback(_window, keybind_manager::scroll_callback);
+  glfwSetKeyCallback(_handle, keybind_manager::key_callback);
+  glfwSetCursorPosCallback(_handle, keybind_manager::cursor_position_callback);
+  glfwSetMouseButtonCallback(_handle, keybind_manager::mouse_button_callback);
+  glfwSetScrollCallback(_handle, keybind_manager::scroll_callback);
 
   return true;
 }
 
 bool window::should_close()
 {
-  return glfwWindowShouldClose(_window);
+  return glfwWindowShouldClose(_handle);
 }
 
 void window::newframe()
@@ -62,7 +60,7 @@ void window::newframe()
 
 void window::render()
 {
-  glfwSwapBuffers(_window);
+  glfwSwapBuffers(_handle);
 }
 
 void window::poll_events()
@@ -76,7 +74,7 @@ void window::poll_events()
 void window::set_cursor_lock(bool state)
 {
   if (state)
-    glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(_handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   else 
-    glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(_handle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
