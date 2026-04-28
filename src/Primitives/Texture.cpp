@@ -11,14 +11,13 @@ Texture::Texture(GLenum texture_target, const std::string& file_path)
 
   stbi_set_flip_vertically_on_load(true);
   int width{ 0 }, height{ 0 }, bpp{ 0 };
-  unsigned char* image_data = stbi_load(_file_path.c_str(), &width, &height, &bpp, 4);
-  
+  unsigned char* image_data = stbi_load(_file_path.c_str(), &width, &height, &bpp, 0);
+
   if (!image_data) {
     std::println("Texture.cpp:16 - stbi_load() failed: {}", _file_path);
     return;
   }
 
-  // Determine format based on number of channels
   GLenum format = GL_RGB;
   if (bpp == 4) format = GL_RGBA;
   if (bpp == 1) format = GL_RED;
@@ -26,7 +25,6 @@ Texture::Texture(GLenum texture_target, const std::string& file_path)
   glGenTextures(1, &_texture_object);
   glBindTexture(_texture_target, _texture_object);
 
-  // Linux drivers are picky! Set alignment to 1 for RGB textures
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
   glTexImage2D(_texture_target, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image_data);

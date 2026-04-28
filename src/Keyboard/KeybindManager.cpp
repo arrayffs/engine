@@ -113,6 +113,7 @@ namespace keybind_manager {
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
           glm::vec2 diff = (current_point - last_point) / -360.f;
+          diff.y *= -1;
 
           orbital_camera->rotate(diff);
           
@@ -122,9 +123,8 @@ namespace keybind_manager {
       else if (pressed) pressed = false;
     }
     
-    /*
-    { // move - temporarily unavailable bcs i can't seem to fix a bug
-      static bool pressed = false;
+    { // move - disabled bcs no more panning ill redo this eventually
+      /*static bool pressed = false;
       static glm::vec2 last_point = glm::vec2(0.f);
       if (keybind_manager::mmb_down()) {
         if (!pressed) {
@@ -134,14 +134,15 @@ namespace keybind_manager {
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
           glm::vec2 diff = current_point - last_point;
-          orbital_camera->move({ 0.1f * diff.x, -0.1f * diff.y });
+          orbital_camera->move({ 0.1f * diff.x, -0.1f * diff.y, 0.1f * diff.x });
 
           last_point = current_point;
         }
       }
-      else if (pressed) pressed = false;
+      else if (pressed) pressed = false;*/
+
+
     }
-    */
 
     { // zoom
       static float last_scroll = 0.f;

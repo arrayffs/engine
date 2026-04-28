@@ -1,17 +1,36 @@
 #include "Terrain.h"
 
+#include <stack>
+
+Terrain::Terrain()
+  : ObjectRenderer(
+    ObjectType::MODEL,
+    "res/Shaders/3d.vert",
+    "res/Shaders/texture_light.frag",
+    { "res/Textures/pop_cat.png" }
+  )
+{
+  
+}
+
 void Terrain::generate(unsigned int seed, glm::vec2 grid_size)
 {
   srand(seed);
 
+  std::vector<vertex_t> vertexes;
+  std::vector<unsigned int> indices;
 
-  for (float x = grid_size.x * -0.5f; x < grid_size.x * 0.5f; x += generator_config::point_density) {
-    for (float y = grid_size.x * -0.5f; y < grid_size.x * 0.5f; y += generator_config::point_density) {
-
-      glm::vec3 point = { x, rand() % ( generator_config::max_ceil- generator_config::min_ceil + 1) + generator_config::min_ceil, y };
-
+  int i{ 0 }, y{ 0 };
+  while (i < 256 || y < 256) {
+    if (i < 255) ++i;
 
 
-    }
+    //if (y < 255) ++y;
+
+
+
   }
+
+
+  upload(vertexes, indices);
 }

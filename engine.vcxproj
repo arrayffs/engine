@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -73,13 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\Build\Debug\Bin\</OutDir>
     <IntDir>$(SolutionDir)\Build\Debug\</IntDir>
-    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\;$(SolutionDir)\Vendor\assimp\Include\;$(SolutionDir)\Vendor\imgui\Include\</IncludePath>
+    <IncludePath>$(SolutionDir)\Vendor\assimp\Include\;$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\glad\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\imgui\Include\;$(SolutionDir)\Vendor\stb\Include\</IncludePath>
     <LibraryPath>$(SolutionDir)\res\Dll\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Build\Release\Bin</OutDir>
     <IntDir>$(SolutionDir)\Build\Release\</IntDir>
-    <IncludePath>$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\stb\Include\;$(SolutionDir)\Vendor\assimp\Include\;$(SolutionDir)\Vendor\imgui\Include\</IncludePath>
+    <IncludePath>$(SolutionDir)\Vendor\assimp\Include\;$(SolutionDir)\Vendor\GL\Include;$(SolutionDir)\Vendor\glad\Include;$(SolutionDir)\Vendor\GLFW\Include;$(SolutionDir)\Vendor\glm\Include;$(SolutionDir)\Vendor\imgui\Include\;$(SolutionDir)\Vendor\stb\Include\</IncludePath>
     <LibraryPath>$(SolutionDir)\res\Dll\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -156,11 +156,11 @@
     <ClCompile Include="src\Primitives\Texture.cpp" />
     <ClCompile Include="src\Primitives\VertexArray.cpp" />
     <ClCompile Include="src\Shader\Shader.cpp" />
-    <ClCompile Include="src\Terrain\Terrain.cpp" />
     <ClCompile Include="src\Util\OrbitalCamera.cpp" />
     <ClCompile Include="src\Util\stb.cpp" />
     <ClCompile Include="src\Window\DebugWindow.cpp" />
     <ClCompile Include="src\Window\Window.cpp" />
+    <ClCompile Include="Vendor\glad\src\glad.c" />
     <ClCompile Include="Vendor\glm\Include\glm\detail\glm.cpp" />
     <ClCompile Include="Vendor\glm\Include\glm\glm.cppm" />
     <ClCompile Include="Vendor\imgui\Include\imgui\imgui.cpp" />
@@ -186,9 +186,9 @@
     <ClInclude Include="src\Primitives\Program.h" />
     <ClInclude Include="src\Primitives\Texture.h" />
     <ClInclude Include="src\Primitives\VertexArray.h" />
-    <ClInclude Include="src\Terrain\Terrain.h" />
     <ClInclude Include="src\Util\Defines.h" />
     <ClInclude Include="src\Shader\Shader.h" />
+    <ClInclude Include="src\Util\GLConfig.h" />
     <ClInclude Include="src\Util\OrbitalCamera.h" />
     <ClInclude Include="src\Util\Singleton.h" />
     <ClInclude Include="src\Window\DebugWindow.h" />
@@ -276,6 +276,8 @@
     <ClInclude Include="Vendor\assimp\Include\assimp\XmlParser.h" />
     <ClInclude Include="Vendor\assimp\Include\assimp\XMLTools.h" />
     <ClInclude Include="Vendor\assimp\Include\assimp\ZipArchiveIOSystem.h" />
+    <ClInclude Include="Vendor\glad\Include\glad\glad.h" />
+    <ClInclude Include="Vendor\glad\Include\KHR\khrplatform.h" />
     <ClInclude Include="Vendor\GLFW\Include\GLFW\glfw3.h" />
     <ClInclude Include="Vendor\GLFW\Include\GLFW\glfw3native.h" />
     <ClInclude Include="Vendor\glm\Include\glm\common.hpp" />

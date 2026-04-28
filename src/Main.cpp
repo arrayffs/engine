@@ -14,8 +14,7 @@ int main(void)
   if (!window::create_window())
     return -1;
 
-  ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj", {0.f, 0.f, 0.f}, "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
-  ObjectRenderer monke = object_loader::load_from_file("res/Models/monke.obj", {1.f, 0.f, 0.f}, "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
+  ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj", glm::vec3(0.f, 0.f, 0.f), "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
   
   glm::mat4 model = glm::mat4(1.f);
   glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, -2.f, -5.f));
@@ -35,7 +34,6 @@ int main(void)
     keybind_manager::translate(model);
     view = orbital_camera->get_view();
 
-    // window resizing, i don't think this works in any way, shape or form.
     proj = glm::perspective(glm::radians(90.f), (float)window::properties::width / (float)window::properties::height, 0.1f, 100.f);
     glViewport(0, 0, window::properties::width, window::properties::height);
     glScissor(0, 0, window::properties::width, window::properties::height);
@@ -45,7 +43,7 @@ int main(void)
 #ifdef _DEBUG
     debug_window::new_frame();
 
-    ImGui::Begin("Tet window");
+    ImGui::Begin("Test window");
 
     ImGui::Text("hayaa");
 

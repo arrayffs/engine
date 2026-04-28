@@ -13,6 +13,6 @@ private:
 public:
   Texture() = default;
   Texture(GLenum texture_target, const std::string& file_path);
-  
+
   void bind(unsigned int texture_unit);
 };

@@ -67,7 +67,7 @@ void ObjectRenderer::set_uniform_mat4(const char* uniform, glm::mat4 mat)
 
 void ObjectRenderer::set_uniform_vec3(const char* uniform, glm::vec3 mat)
 {
-    int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
-    assert(uniform_id != -1);
-    glUniform3fv(uniform_id, 1, glm::value_ptr(mat));
+  int uniform_id = glGetUniformLocation(_program.get_id(), uniform);
+  assert(uniform_id != -1);
+  glUniform3fv(uniform_id, 1, glm::value_ptr(mat));
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../ObjectRenderer/ObjectRenderer.h"
 #include "../Util/Defines.h"
 #include <mutex>
 
@@ -10,14 +11,10 @@ namespace generator_config {
   float point_density{ 16.f };
 }
 
-class Terrain
+class Terrain: public ObjectRenderer
 {
-private:
-  std::vector<vertex_t> _terrain;
 public:
-  std::vector<vertex_t> get() const { return _terrain; }
+  Terrain();
 
   void generate(unsigned int seed, glm::vec2 grid_size = {256.f, 256.f});
-
-  std::vector<vertex_t>& get_mut() { return _terrain; }
 };

@@ -11,20 +11,20 @@ namespace object_loader {
 
   ObjectRenderer load_from_file(const std::string& filepath, glm::vec3 pos, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
   {
-      auto renderer = load_from_file(filepath, vert_shader_path, frag_shader_path, texture_path);
-      renderer.set_pos(pos);
-      return renderer;
+    auto renderer = load_from_file(filepath, vert_shader_path, frag_shader_path, texture_path);
+    renderer.set_pos(pos);
+    return renderer;
   }
 
   ObjectRenderer load_from_file(const std::string& filepath, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
   {
     importer.SetPropertyBool(AI_CONFIG_PP_FD_REMOVE, true);
     const aiScene* scene = importer.ReadFile(filepath,
-        aiProcess_Triangulate |
-        aiProcess_JoinIdenticalVertices |
-        aiProcess_ImproveCacheLocality |
-        aiProcess_RemoveRedundantMaterials |
-        aiProcess_FlipUVs
+      aiProcess_Triangulate |
+      aiProcess_JoinIdenticalVertices |
+      aiProcess_ImproveCacheLocality |
+      aiProcess_RemoveRedundantMaterials |
+      aiProcess_FlipUVs
     );
 
     if (nullptr == scene) {
@@ -49,7 +49,7 @@ namespace object_loader {
           auto& uv = mesh->mTextureCoords[0][j];
           vertex_._tex_pos = { uv.x, uv.y };
         }
-        
+
         if (mesh->HasNormals()) {
           vertex_._normal = { mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z };
         }
@@ -65,7 +65,7 @@ namespace object_loader {
         }
       }
     }
-    
+
     return ObjectRenderer(
       ObjectType::MODEL, vertices, indices, vert_shader_path, frag_shader_path, texture_path
     );
