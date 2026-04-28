@@ -9,14 +9,14 @@
 namespace object_loader {
   Assimp::Importer importer;
 
-  ObjectRenderer load_from_file(const std::string& filepath, glm::vec3 pos, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
+  Mesh load_from_file(const std::string& filepath, glm::vec3 pos, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
   {
     auto renderer = load_from_file(filepath, vert_shader_path, frag_shader_path, texture_path);
     renderer.set_pos(pos);
     return renderer;
   }
 
-  ObjectRenderer load_from_file(const std::string& filepath, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
+  Mesh load_from_file(const std::string& filepath, const std::string& vert_shader_path, const std::string& frag_shader_path, const std::string& texture_path)
   {
     importer.SetPropertyBool(AI_CONFIG_PP_FD_REMOVE, true);
     const aiScene* scene = importer.ReadFile(filepath,
@@ -66,7 +66,7 @@ namespace object_loader {
       }
     }
 
-    return ObjectRenderer(
+    return Mesh(
       ObjectType::MODEL, vertices, indices, vert_shader_path, frag_shader_path, texture_path
     );
   }

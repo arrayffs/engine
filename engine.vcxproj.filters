@@ -21,9 +21,9 @@
     <ClCompile Include="Vendor\imgui\Include\imgui\imgui_tables.cpp" />
     <ClCompile Include="Vendor\imgui\Include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\Window\DebugWindow.cpp" />
-    <ClCompile Include="src\ObjectRenderer\ObjectLoader.cpp" />
     <ClCompile Include="src\ObjectRenderer\ObjectRenderer.cpp" />
     <ClCompile Include="src\Primitives\BufferArray.cpp" />
+    <ClCompile Include="src\AssetManager\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h" />
@@ -435,9 +435,11 @@
     <ClInclude Include="Vendor\imgui\Include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\Window\DebugWindow.h" />
     <ClInclude Include="src\Util\GLConfig.h" />
-    <ClInclude Include="src\ObjectRenderer\ObjectLoader.h" />
     <ClInclude Include="src\ObjectRenderer\ObjectRenderer.h" />
     <ClInclude Include="src\Primitives\BufferArray.h" />
+    <ClInclude Include="src\AssetManager\Model.h" />
+    <ClInclude Include="src\AssetManager\Material.h" />
+    <ClInclude Include="src\AssetManager\ShaderCache.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Vendor\Dll\assimp-vc143-mt.dll" />

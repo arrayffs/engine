@@ -147,9 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssetManager\Model.cpp" />
     <ClCompile Include="src\Keyboard\KeybindManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\ObjectRenderer\ObjectLoader.cpp" />
     <ClCompile Include="src\ObjectRenderer\ObjectRenderer.cpp" />
     <ClCompile Include="src\Primitives\BufferArray.cpp" />
     <ClCompile Include="src\Primitives\Program.cpp" />
@@ -178,9 +178,11 @@
     <ClInclude Include="include\GL\glew.h" />
     <ClInclude Include="include\GL\glxew.h" />
     <ClInclude Include="include\GL\wglew.h" />
+    <ClInclude Include="src\AssetManager\Material.h" />
+    <ClInclude Include="src\AssetManager\Model.h" />
+    <ClInclude Include="src\AssetManager\ShaderCache.h" />
     <ClInclude Include="src\Keyboard\KeybindManager.h" />
     <ClInclude Include="src\Keyboard\Keybinds.h" />
-    <ClInclude Include="src\ObjectRenderer\ObjectLoader.h" />
     <ClInclude Include="src\ObjectRenderer\ObjectRenderer.h" />
     <ClInclude Include="src\Primitives\BufferArray.h" />
     <ClInclude Include="src\Primitives\Program.h" />

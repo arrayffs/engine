@@ -19,15 +19,23 @@ Texture::Texture(GLenum texture_target, const std::string& file_path)
   }
 
   GLenum format = GL_RGB;
-  if (bpp == 4) format = GL_RGBA;
-  if (bpp == 1) format = GL_RED;
+  GLenum data_format = GL_RGB;
+
+  if (bpp == 4) {
+    format = GL_RGBA;
+    data_format = GL_RGBA;
+  }
+  else if (bpp == 1) {
+    format = GL_RED;
+    data_format = GL_RED;
+  }
 
   glGenTextures(1, &_texture_object);
   glBindTexture(_texture_target, _texture_object);
 
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-  glTexImage2D(_texture_target, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image_data);
+  glTexImage2D(_texture_target, 0, format, width, height, 0, data_format, GL_UNSIGNED_BYTE, image_data);
 
   glTexParameterf(_texture_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameterf(_texture_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

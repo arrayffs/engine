@@ -6,15 +6,17 @@
 #include "Window/Window.h"
 #include "Window/DebugWindow.h"
 
-#include "ObjectRenderer/ObjectLoader.h"
+//#include "ObjectRenderer/ObjectLoader.h"
 #include "Util/OrbitalCamera.h"
+#include "AssetManager/Model.h"
 
 int main(void)
 {
   if (!window::create_window())
     return -1;
 
-  ObjectRenderer cube = object_loader::load_from_file("res/Models/cube.obj", glm::vec3(0.f, 0.f, 0.f), "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
+  //Mesh cube = object_loader::load_from_file("res/Models/1975_Porsche_911/scene.gltf", glm::vec3(0.f, 0.f, 0.f), "res/Shaders/3d.vert", "res/Shaders/texture_light.frag", "res/Textures/pop_cat.png");
+  Model cube = Model::load_from_file("res/Models/1975_Porsche_911/scene.gltf", "res/Shaders/3d.vert", "res/Shaders/texture_light.frag");
   
   glm::mat4 model = glm::mat4(1.f);
   glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.0f, -2.f, -5.f));

@@ -9,17 +9,27 @@
 #include "../Primitives/Program.h"
 #include "../Primitives/Texture.h"
 
+#include "../AssetManager/Material.h"
+
 enum class ObjectType {
   MODEL,
   LIGHT
 };
 
-class ObjectRenderer
+class Mesh
 {
   BufferArray _buffer_array;
   VertexArray _vertex_array;
-  Program _program;
-  Texture _texture;
+  Program* _program;
+  
+  Texture _diffuse_tex;
+  Texture _specular_tex;
+  Texture _normal_tex;
+
+  Material _material;
+  bool _has_diffuse = false;
+  bool _has_specular = false;
+  bool _has_normal = false;
 
   size_t _element_count;
   glm::vec3 _world_pos = glm::vec3(0.f);
@@ -27,8 +37,8 @@ class ObjectRenderer
   ObjectType _object_type = ObjectType::MODEL;
 
 public:
-  ObjectRenderer() = default;
-  ObjectRenderer(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, std::string vertex_shader_path, std::string fragment_shader_path, std::string texture_path);
+  Mesh() = default;
+  Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, Program& program, Material material);
 
   void bind();
   void render(glm::mat4& model, glm::mat4& view, glm::mat4& proj);
@@ -36,7 +46,7 @@ public:
   unsigned int get_buffer_array_id() { return _buffer_array.get_id(); }
   unsigned int get_vertex_array_id() { return _vertex_array.get_va_id(); }
   unsigned int get_index_buffer_id() { return _vertex_array.get_ib_id(); }
-  unsigned int get_program_id() { return _program.get_id(); }
+  unsigned int get_program_id() { return _program->get_id(); }
 
   void set_pos(glm::vec3 world_pos)
   {
@@ -55,6 +65,7 @@ public:
   glm::vec3 get_scale() const { return _scale; }
 
 
+  void set_uniform_1f(const char* uniform, float i);
   void set_uniform_1i(const char* uniform, int i);
   void set_uniform_4f(const char* uniform, float colors[4]);
   void set_uniform_mat4(const char* uniform, glm::mat4 mat);
