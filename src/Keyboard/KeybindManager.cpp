@@ -112,8 +112,7 @@ namespace keybind_manager {
         }
         else {
           glm::vec2 current_point = keybind_manager::cursor_pos();
-          glm::vec2 diff = (current_point - last_point) / -360.f;
-          diff.y *= -1;
+          glm::vec2 diff = (current_point - last_point) / 360.f;
 
           orbital_camera->rotate(diff);
           

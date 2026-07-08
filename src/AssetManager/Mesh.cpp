@@ -1,9 +1,18 @@
-#include "ObjectRenderer.h"
+#include "Mesh.h"
+
+#include <print>
 
 #include "../Util/Defines.h"
 
 #include "../Util/GLConfig.h"
 #include <glm/ext.hpp>
+#include "../Window/Window.h"
+#include "../Raytracer/CollisionRegistry.h"
+
+Mesh::~Mesh()
+{
+  CollisionRegistry::get_instance()->remove_mesh(this);
+}
 
 Mesh::Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, Program& program, Material material)
 {
@@ -27,8 +36,6 @@ Mesh::Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<
     _has_normal = true;
   }
 
-  
-
   set_uniform_vec3("u_offset", _world_pos);
   set_uniform_vec3("u_scale", { 1.f, 0.5f, 0.5f });
 }
@@ -39,24 +46,20 @@ void Mesh::bind()
   _buffer_array.bind();
   _program->bind();
 
-  // Bind textures to specific slots
   if (_has_diffuse)  _diffuse_tex.bind(GL_TEXTURE0);
   if (_has_specular) _specular_tex.bind(GL_TEXTURE1);
   if (_has_normal)   _normal_tex.bind(GL_TEXTURE2);
 
-  // Upload Material Uniforms
   set_uniform_vec3("u_material.diffuse", _material.diffuse);
   set_uniform_vec3("u_material.ambient", _material.ambient);
   set_uniform_vec3("u_material.specular", _material.specular);
   set_uniform_1f("u_material.shininess", _material.shininess);
   set_uniform_1f("u_material.opacity", _material.opacity);
 
-  // Tell the shader if we are using textures or raw colors
   set_uniform_1i("u_material.has_diffuse_tex", _has_diffuse ? 1 : 0);
   set_uniform_1i("u_material.has_specular_tex", _has_specular ? 1 : 0);
   set_uniform_1i("u_material.has_normal_tex", _has_normal ? 1 : 0);
 
-  // Set sampler slots
   set_uniform_1i("u_material.diffuse_sampler", 0);
   set_uniform_1i("u_material.specular_sampler", 1);
   set_uniform_1i("u_material.normal_sampler", 2);
@@ -69,15 +72,21 @@ void Mesh::bind()
   glUniform3fv(light_color, 1, glm::value_ptr(light));
 }
 
-void Mesh::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj)
+bool Mesh::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj, glm::vec3& light_source, glm::vec3& position)
 {
   bind();
 
   set_uniform_mat4("u_model", model);
   set_uniform_mat4("u_view", view);
   set_uniform_mat4("u_proj", proj);
-
+  set_uniform_vec3("u_light_source", light_source);
+  set_uniform_vec3("u_light_color", glm::vec3(1.f, 1.f, 1.f));
+  set_uniform_vec3("u_camera_position", position);
+  set_uniform_1i("u_hovered", _hovered);
+  
   glDrawElements(GL_TRIANGLES, _element_count, GL_UNSIGNED_INT, nullptr);
+
+  return false;
 }
 
 void Mesh::set_uniform_1f(const char* uniform, float i)

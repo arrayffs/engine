@@ -36,12 +36,20 @@ class Mesh
   glm::vec3 _scale = glm::vec3(1.f);
   ObjectType _object_type = ObjectType::MODEL;
 
+  bool _hovered{ false };
 public:
   Mesh() = default;
+  ~Mesh();
   Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, Program& program, Material material);
 
+  Mesh(const Mesh&) = delete;
+  Mesh& operator=(const Mesh&) = delete;
+
+  Mesh(Mesh&&) noexcept = default;
+  Mesh& operator=(Mesh&&) noexcept = default;
+
   void bind();
-  void render(glm::mat4& model, glm::mat4& view, glm::mat4& proj);
+  bool render(glm::mat4& model, glm::mat4& view, glm::mat4& proj, glm::vec3& light_source, glm::vec3& position);
 
   unsigned int get_buffer_array_id() { return _buffer_array.get_id(); }
   unsigned int get_vertex_array_id() { return _vertex_array.get_va_id(); }
@@ -70,4 +78,10 @@ public:
   void set_uniform_4f(const char* uniform, float colors[4]);
   void set_uniform_mat4(const char* uniform, glm::mat4 mat);
   void set_uniform_vec3(const char* uniform, glm::vec3 mat);
+
+  const BufferArray& get_buffer_array() const { return _buffer_array; }
+  const VertexArray& get_vertex_array() const { return _vertex_array; }
+
+  void set_hovered(bool state) { _hovered = state; }
+  bool is_hovered() const { return _hovered; }
 };

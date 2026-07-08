@@ -16,6 +16,7 @@ bool window::create_window()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_SAMPLES, 4);
 
   _handle = glfwCreateWindow(properties::width, properties::height, "autistic engine", NULL, NULL);
   if (!_handle) {
@@ -40,6 +41,9 @@ bool window::create_window()
 #endif
 
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_MULTISAMPLE);
+  //glEnable(GL_FRAMEBUFFER_SRGB);
+
   glfwSetKeyCallback(_handle, keybind_manager::key_callback);
   glfwSetCursorPosCallback(_handle, keybind_manager::cursor_position_callback);
   glfwSetMouseButtonCallback(_handle, keybind_manager::mouse_button_callback);
@@ -77,4 +81,15 @@ void window::set_cursor_lock(bool state)
     glfwSetInputMode(_handle, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   else 
     glfwSetInputMode(_handle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+glm::vec2 window::calc_ndc()
+{
+  double x{}, y{};
+  glfwGetCursorPos(_handle, &x, &y);
+  
+  return glm::vec2(
+    2 * x / window::properties::width - 1,
+    1 - 2 * y / window::properties::height
+  );
 }

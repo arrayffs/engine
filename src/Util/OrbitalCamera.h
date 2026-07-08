@@ -29,5 +29,6 @@ public:
 
   glm::mat4 get_view() const { return _view; }
   glm::vec3 pivot_position() const { return _pivot_point; }
+  glm::vec3 position() const { return _position; }
 };
 

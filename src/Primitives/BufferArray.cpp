@@ -15,7 +15,8 @@ BufferArray::BufferArray(std::vector<vertex_t> positions) {
 
   glEnableVertexAttribArray(2);
   glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, _normal));
-
+  _count = positions.size();
+  _position_cache = positions;
 }
 
 void BufferArray::bind() {

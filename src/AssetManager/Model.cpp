@@ -1,5 +1,7 @@
 #include "Model.h"
 
+#include "../Raytracer/CollisionRegistry.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -7,8 +9,8 @@
 #include <print>
 #include <filesystem>
 
-Model::Model(std::vector<Mesh> meshes)
-  : _meshes(meshes)
+Model::Model(std::vector<std::unique_ptr<Mesh>> meshes)
+  : _meshes(std::move(meshes))
 {
   _valid = true;
 }
@@ -33,9 +35,8 @@ Model Model::load_from_file(std::string filepath, std::string vs_path, std::stri
   std::string directory = std::filesystem::path(filepath).parent_path().string() + "/";
   Program* program = new Program(vs_path, fs_path);
 
-  std::vector<Mesh> meshes;
+  std::vector<std::unique_ptr<Mesh>> meshes;
   for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
-    std::println("Loading mesh {}/{}", i, scene->mNumMeshes);
     aiMesh* amesh = scene->mMeshes[i];
 
     Material material(scene->mMaterials[amesh->mMaterialIndex]);
@@ -67,8 +68,14 @@ Model Model::load_from_file(std::string filepath, std::string vs_path, std::stri
         indices.push_back(face.mIndices[k]);
       }
     }
-    meshes.push_back(Mesh(ObjectType::MODEL, vertices, indices, *program, material));
+
+    auto mesh = std::make_unique<Mesh>(ObjectType::MODEL, vertices, indices, *program, material);
+    CollisionRegistry::get_instance()->add_mesh(mesh.get());
+    meshes.push_back(std::move(mesh));
+
+
+    std::println("[?] Loaded mesh {}/{}", i + 1, scene->mNumMeshes);
   }
 
-  return Model(meshes);
+  return Model(std::move(meshes));
 }

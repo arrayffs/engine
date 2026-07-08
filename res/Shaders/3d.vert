@@ -15,9 +15,8 @@ out vec2 pass_tex_pos;
 out vec3 pass_normal;
 
 void main() {
-	gl_Position = u_proj * u_view * u_model * vec4((in_pos + u_offset) * u_scale, 1.0);
-	pass_frag_pos = vec3(u_model * vec4((in_pos + u_offset) * u_scale, 1.0));
-
-	pass_tex_pos = in_tex_pos;
-	pass_normal = in_normal;
+	gl_Position = u_proj * u_view * u_model * vec4(in_pos, 1.0);
+  pass_frag_pos = vec3(u_model * vec4(in_pos, 1.0));
+  pass_tex_pos = in_tex_pos;
+  pass_normal = mat3(transpose(inverse(u_model))) * in_normal;
 }

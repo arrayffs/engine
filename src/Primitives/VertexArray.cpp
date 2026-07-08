@@ -10,6 +10,9 @@ VertexArray::VertexArray(std::vector<unsigned int> ib_indices)
   glGenBuffers(1, &_index_buffer);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index_buffer);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, ib_indices.size() * sizeof(unsigned int), ib_indices.data(), GL_STATIC_DRAW);
+
+  _count = ib_indices.size();
+  _indices_cache = ib_indices;
 }
 
 void VertexArray::bind()
