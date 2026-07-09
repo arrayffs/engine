@@ -1,10 +1,11 @@
 #include "Terrain.h"
 #include <random>
 #include <stack>
+#include "../Raytracer/CollisionRegistry.h"
 
-Terrain::Terrain()
+Terrain::~Terrain()
 {
-  
+  CollisionRegistry::get_instance()->remove_mesh(&_mesh);
 }
 
 void Terrain::generate(unsigned int seed, glm::vec2 grid_size)
@@ -82,6 +83,8 @@ void Terrain::generate(unsigned int seed, glm::vec2 grid_size)
     ObjectType::MODEL,
     vertexes, indices, _program, _material
   };
+  
+  CollisionRegistry::get_instance()->add_mesh(&_mesh);
 }
 
 void Terrain::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj, glm::vec3& light_source, glm::vec3& position)

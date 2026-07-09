@@ -16,7 +16,7 @@ Model::Model(std::vector<std::unique_ptr<Mesh>> meshes)
 }
 
 Assimp::Importer importer;
-Model Model::load_from_file(std::string filepath, std::string vs_path, std::string fs_path)
+Model Model::load_from_file(std::string filepath, std::string vs_path, std::string fs_path, bool collider_surface)
 {
   importer.SetPropertyBool(AI_CONFIG_PP_FD_REMOVE, true);
   const aiScene* scene = importer.ReadFile(filepath,
@@ -69,8 +69,10 @@ Model Model::load_from_file(std::string filepath, std::string vs_path, std::stri
       }
     }
 
-    auto mesh = std::make_unique<Mesh>(ObjectType::MODEL, vertices, indices, *program, material);
-    CollisionRegistry::get_instance()->add_mesh(mesh.get());
+    auto mesh = std::make_unique<Mesh>(ObjectType::MODEL, vertices, indices, *program, material, collider_surface);
+    if (collider_surface)
+      CollisionRegistry::get_instance()->add_mesh(mesh.get());
+
     meshes.push_back(std::move(mesh));
 
 

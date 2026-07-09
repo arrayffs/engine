@@ -33,7 +33,7 @@ protected:
   Program _program;
  
 public:
-  Terrain();
+  ~Terrain();
 
   void generate(unsigned int seed, glm::vec2 grid_size = {256.f, 256.f});
 

@@ -11,10 +11,12 @@
 
 Mesh::~Mesh()
 {
-  CollisionRegistry::get_instance()->remove_mesh(this);
+  if (_collider_surface)
+    CollisionRegistry::get_instance()->remove_mesh(this);
 }
 
-Mesh::Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, Program& program, Material material)
+Mesh::Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, Program& program, Material material, bool collider_surface)
+  : _collider_surface(collider_surface)
 {
   _vertex_array = VertexArray(indices);
   _buffer_array = BufferArray(positions);
@@ -122,4 +124,14 @@ void Mesh::set_uniform_vec3(const char* uniform, glm::vec3 mat)
   int uniform_id = glGetUniformLocation(_program->get_id(), uniform);
   if (uniform_id != -1)
   glUniform3fv(uniform_id, 1, glm::value_ptr(mat));
+}
+
+void Mesh::set_collissions(bool state)
+{
+  _collider_surface = state;
+
+  if (state)
+    CollisionRegistry::get_instance()->add_mesh(this);
+  else
+    CollisionRegistry::get_instance()->remove_mesh(this);
 }

@@ -10,8 +10,8 @@
 
 namespace keybind_manager {
   typedef int Key;
-  std::map<Key, bool> g_keyboard;
-  std::map<Key, bool> g_queued_releases;
+  std::vector<bool> g_keyboard(1024, false);
+  std::vector<bool> g_queued_releases(1024, false);
 
   bool g_mouse[8];
   bool g_queued_mouse[8];
@@ -87,7 +87,7 @@ namespace keybind_manager {
     static auto orbital_camera = OrbitalCamera::get_instance();
 
     { // mouse detach
-      static bool cursor_locked = true;
+      static bool cursor_locked = false;
       static bool init = false;
       if (!init) {
         init = true;
@@ -115,7 +115,6 @@ namespace keybind_manager {
           glm::vec2 diff = (current_point - last_point) / 360.f;
 
           orbital_camera->rotate(diff);
-          
           last_point = current_point;
         }
       }
@@ -139,8 +138,6 @@ namespace keybind_manager {
         }
       }
       else if (pressed) pressed = false;*/
-
-
     }
 
     { // zoom
@@ -148,10 +145,7 @@ namespace keybind_manager {
       if (g_total_scroll.y != last_scroll) {
         float diff = g_total_scroll.y - last_scroll;
         last_scroll = g_total_scroll.y;
-
-        //view = glm::translate(view, glm::vec3(0.f, 0.f, 0.5f * diff));
         orbital_camera->zoom(diff);
-
       }
     }
   }

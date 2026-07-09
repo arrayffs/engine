@@ -17,14 +17,14 @@ public:
     std::lock_guard<std::mutex> lock(_mesh_lock);
 
     _meshes.push_back(mesh);
-    std::println("[+] New collision mesh registered, current size {}", _meshes.size());
+    //std::println("[+] New collision mesh registered, current size {}", _meshes.size());
   }
 
   void remove_mesh(Mesh* mesh) {
     std::lock_guard<std::mutex> lock(_mesh_lock);
 
     std::erase(_meshes, mesh);
-    std::println("[?] Collision mesh removed, current size {}", _meshes.size());
+    //std::println("[?] Collision mesh removed, current size {}", _meshes.size());
   }
 
 };

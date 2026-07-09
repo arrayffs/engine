@@ -26,6 +26,7 @@
     <ClCompile Include="src\AssetManager\Model.cpp" />
     <ClCompile Include="src\Terrain\Terrain.cpp" />
     <ClCompile Include="src\Raytracer\Raytracer.cpp" />
+    <ClCompile Include="src\AssetManager\AssetManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLFW\glfw3.h" />
@@ -446,6 +447,7 @@
     <ClInclude Include="src\Raytracer\CollisionRegistry.h" />
     <ClInclude Include="src\Raytracer\Raytracer.h" />
     <ClInclude Include="src\Raytracer\RaytracerThread.h" />
+    <ClInclude Include="src\AssetManager\AssetManager.h" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Vendor\Dll\assimp-vc143-mt.dll" />

@@ -5,7 +5,7 @@
 
 std::optional<glm::vec3> Raytracer::ray_intersects_triangle(const glm::vec3& ray_origin, const glm::vec3& ray_vector, const glm::vec3& a, const glm::vec3& b, const glm::vec3 c)
 {
-  constexpr float epsilon = std::numeric_limits<float>::epsilon(); // apparently too small??
+  constexpr float epsilon = std::numeric_limits<float>::epsilon();
 
   glm::vec3 edge1 = b - a;
   glm::vec3 edge2 = c - a;
@@ -44,11 +44,11 @@ std::optional<glm::vec3> Raytracer::raycast(glm::vec3& origin, glm::vec3& direct
   float nearest_distance = std::numeric_limits<float>::max();
   Mesh* nearest_mesh{ nullptr };
   glm::vec3 impact = glm::vec3(0.f);
+
+  std::vector<Mesh*> hovered_meshes{};
   for (auto& mesh : registry->_meshes) {
     auto& indices = mesh->get_vertex_array().get_indices_cache();
     auto& vertexes = mesh->get_buffer_array().get_vertex_positions();
-
-    bool hovered = false;
 
     for (int i = 0; i < indices.size(); i += 3) {
       glm::vec3 a = vertexes[indices[i]]    ._world_pos;
@@ -66,14 +66,19 @@ std::optional<glm::vec3> Raytracer::raycast(glm::vec3& origin, glm::vec3& direct
           break;
         }
       }
+      else if (mesh->is_hovered())
+        hovered_meshes.push_back(mesh);
     }
-
-    mesh->set_hovered(false);
   }
 
   if (!nearest_mesh)
     return std::nullopt;
 
+  for (auto* m : hovered_meshes) {
+    m->set_hovered(false);
+  }
+
   nearest_mesh->set_hovered(true);
+
   return impact;
 }

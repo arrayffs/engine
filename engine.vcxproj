@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssetManager\AssetManager.cpp" />
     <ClCompile Include="src\AssetManager\Model.cpp" />
     <ClCompile Include="src\Keyboard\KeybindManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="include\GL\glew.h" />
     <ClInclude Include="include\GL\glxew.h" />
     <ClInclude Include="include\GL\wglew.h" />
+    <ClInclude Include="src\AssetManager\AssetManager.h" />
     <ClInclude Include="src\AssetManager\Material.h" />
     <ClInclude Include="src\AssetManager\Model.h" />
     <ClInclude Include="src\AssetManager\ShaderCache.h" />
