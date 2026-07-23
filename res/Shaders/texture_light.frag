@@ -41,6 +41,7 @@ void main() {
   float diff = max(dot(normal, light_direction), 0.0);
   vec3 diffuse = diff * u_material.diffuse;
   if (u_material.has_diffuse_tex) diffuse *= texture2D(u_material.diffuse_sampler, pass_tex_pos).rgb;
+  //diffuse = pow(diffuse, vec3(gamma));
 
   // specular
   vec3 view_direction = normalize(u_camera_position - pass_frag_pos);
@@ -52,7 +53,7 @@ void main() {
 
   out_color = vec4(diffuse + specular, 1.f);
 
-  if (u_hovered) {
+  if (u_hovered && false) {
     out_color.x += 0.05f;
     out_color.z += 0.05f;
   }

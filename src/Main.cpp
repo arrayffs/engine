@@ -29,8 +29,8 @@ int main(void)
   glm::vec3 light_position = glm::vec3(5.f, 1.f, 1.f);
   RaytracerThread rt{ 100 };
 
-  AssetManager asset_manager{ };
-  asset_manager.load_asset(
+  auto asset_manager = AssetManager::get_instance();
+  asset_manager->load_asset(
     std::vector<std::string> {
       "pavement",
       "cube"
@@ -58,7 +58,7 @@ int main(void)
     auto camera_position = orbital_camera->position();
     rt.update_view(model, view, proj, camera_position);
 
-    asset_manager.render(model, view, proj, light_position, camera_position);
+    asset_manager->render(model, view, proj, light_position, camera_position);
     terrain.render(model, view, proj, light_position, camera_position);
     
 #ifdef _DEBUG
@@ -76,7 +76,7 @@ int main(void)
     debug_window::render();
 #endif
 
-    asset_manager.poll();
+    asset_manager->poll();
     window::render();
     window::poll_events();
   }

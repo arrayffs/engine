@@ -39,6 +39,7 @@ class Mesh
   bool _hovered{ false };
   bool _collider_surface{ true };
 public:
+  Mesh() = default;
   ~Mesh();
   Mesh(ObjectType object_type, std::vector<vertex_t> positions, std::vector<unsigned int> indices, Program& program, Material material, bool collider_surface = true);
 

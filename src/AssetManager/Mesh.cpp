@@ -78,6 +78,8 @@ bool Mesh::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj, glm::vec3&
 {
   bind();
 
+  set_uniform_vec3("u_offset", _world_pos);
+  set_uniform_vec3("u_scale", _scale);
   set_uniform_mat4("u_model", model);
   set_uniform_mat4("u_view", view);
   set_uniform_mat4("u_proj", proj);

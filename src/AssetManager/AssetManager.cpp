@@ -1,5 +1,6 @@
 #include "AssetManager.h"
 #include "../Keyboard/KeybindManager.h"
+#include <print>
 
 #define DEBUG_ASSET_ARROW 0
 
@@ -14,11 +15,13 @@ AssetManager::AssetManager()
 
 bool AssetManager::load_asset(std::string asset_name)
 {
-  _models.push_back(Model::load_from_file(
-    std::format("res/Models/{}.obj", asset_name),
-    "res/Shaders/3d.vert",
-    "res/Shaders/texture_light.frag"
-  ));
+  //_models.push_back(Model::load_from_file(
+  //  std::format("res/Models/{}.obj", asset_name),
+  //  "res/Shaders/3d.vert",
+  //  "res/Shaders/texture_light.frag"
+  //));
+
+  _available_assets.push_back(asset_name);
 
   return true;
 }
@@ -44,9 +47,10 @@ void AssetManager::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj, gl
 
   auto& asset = _models[_selected_model];
   
-  _debug_models[DEBUG_ASSET_ARROW].set_pos(asset.get_pos() + glm::vec3(0.f, 2.f, 0.f));
-  _debug_models[DEBUG_ASSET_ARROW].set_scale(glm::vec3(0.2f, 0.2f, 0.2f);
-  _debug_models[DEBUG_ASSET_ARROW].render(model, view, proj, light_source, position);
+  //_debug_models[DEBUG_ASSET_ARROW].set_pos(glm::vec3(100.f, 2.f, 5.f));
+  //_debug_models[DEBUG_ASSET_ARROW].set_scale(glm::vec3(0.2f, 0.2f, 0.2f));
+  //_debug_models[DEBUG_ASSET_ARROW].render(model, view, proj, light_source, position);
+
 }
 
 void AssetManager::poll()
@@ -55,8 +59,11 @@ void AssetManager::poll()
     if (!_lmb_down) _lmb_down = true;
     else {
       for (int i = 0; i < _models.size(); ++i) {
-        if (_models[i].is_hovered())
+        if (_models[i].is_hovered()) {
           _selected_model = i;
+          std::println("Now moving {}", i);
+        }
+        
       }
     }
   }
