@@ -1,5 +1,4 @@
-#include "Mesh.h"
-
+#include <Asset/Mesh.h>
 #include <Utility/GLConfig.h>
 
 Mesh::Mesh(std::vector<vertex_t> vertexes, std::vector<uint32_t> indices)

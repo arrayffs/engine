@@ -1,4 +1,4 @@
-#include "ProgramFactory.h"
+#include <Lighting/ProgramFactory.h>
 
 #include <Utility/GLConfig.h>
 #include <Utility/Logger.h>
