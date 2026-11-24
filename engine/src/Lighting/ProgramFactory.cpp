@@ -44,9 +44,7 @@ unsigned int program_factory::create_program(const std::string& vertex_shader, c
 {
   unsigned int program = glCreateProgram();
 
-  Logger::message("ProgramFactory", "Compiling vertex shader ");
   unsigned int vs = compile_shader(GL_VERTEX_SHADER, vertex_shader);
-  Logger::message("ProgramFactory", "Compiling fragment shader ");
   unsigned int fs = compile_shader(GL_FRAGMENT_SHADER, fragment_shader);
 
   glAttachShader(program, vs);

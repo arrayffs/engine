@@ -1,8 +1,13 @@
 set(EDITOR_SOURCES
     src/Main.cpp
+    src/Keyboard/KeybindManager.cpp
 )
 
-add_executable(editor ${EDITOR_SOURCES})
+set(EDITOR_HEADERS
+  src/Keyboard/KeybindManager.h
+)
+
+add_executable(editor ${EDITOR_SOURCES} ${EDITOR_HEADERS})
 
 target_include_directories(editor
     PRIVATE

@@ -1,3 +1,5 @@
+#pragma warning (disable: 4100 4267)
+
 #include <Engine.h>
 
 #include <Utility/Logger.h>
@@ -5,8 +7,17 @@
 
 bool Engine::init()
 {
-  
   Logger::message("Engine", "Initialized");
+
+  auto cube = _asset_manager->load_asset("res/Models/cube.obj");
+  if (cube.has_value()) {
+    for (float x = -5; x < 5; ++x) {
+      for (float z = -5; z < 5; ++z) {
+        _world.add_object(cube.value(), glm::vec3(5.f * x, 0.f, 5.f * z));
+      }
+    }
+  }
+
   return true;
 }
 
@@ -20,7 +31,6 @@ bool Engine::shutdown()
 bool Engine::draw_frame()
 {
   _window.new_frame();
-
   _proj = glm::perspective(
     glm::radians(45.f),
     (float)_window.width() / (float)_window.height(),
@@ -39,30 +49,10 @@ bool Engine::draw_frame()
   int u_view = glGetUniformLocation(program.get_id(), "u_view");
   glUniformMatrix4fv(u_view, 1, GL_FALSE, glm::value_ptr(_view));
 
-  /*
-  * 0   1
-  *   4
-  * 3   2
-  */
-  static Mesh mesh = Mesh(
-    {
-      { { 0.f, 0.f, 0.f } },
-      { { 1.f, 0.f, 0.f } },
-      { { 1.f, 0.f, 1.f } },
-      { { 0.f, 0.f, 1.f } },
-      { { 0.5f, 1.f, 0.5f } },
-    },
-    {
-      0, 1, 4,
-      1, 2, 4,
-      2, 3, 4,
-      3, 0, 2,
-      0, 1, 3,
-      1, 3, 2
-    }
-  );
-
-  mesh.render(_model, _view, _proj);
+  int u_position = glGetUniformLocation(program.get_id(), "u_position");
+  for (auto& obj : _world._objects) {
+    obj->render(u_position);
+  }
 
   _window.render();
   _window.poll_events();

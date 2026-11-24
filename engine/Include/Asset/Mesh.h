@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <utility>
 
 struct vertex_t
 {
@@ -13,9 +14,13 @@ struct vertex_t
 
 class Mesh
 {
+public:
+  std::vector<vertex_t> _vertex{ };
+  std::vector<uint32_t> _indices{ };
+
+  std::pair<glm::vec3, glm::vec3> _bounding_box{ };
+
 protected:
-  std::vector<vertex_t> _vertex { };
-  std::vector<uint32_t> _indices { };
 
   // vertex array object - basically config of the mesh
   uint32_t _vao{ };
@@ -27,7 +32,7 @@ public:
   Mesh(std::vector<vertex_t> vertex, std::vector<uint32_t> indices);
 
   void bind();
-  void render(glm::mat4& model, glm::mat4& view, glm::mat4& proj);
+  void render();
 };
 
 #endif // !_MESH_H_

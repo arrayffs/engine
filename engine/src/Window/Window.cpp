@@ -10,12 +10,16 @@ Window::Window()
     return;
   }
 
+  glfwSetErrorCallback([](int code, const char* message) {
+    Logger::error("GLFW", "{}: {}", code, message);
+    });
+
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_SAMPLES, 16);
 
-  _handle = glfwCreateWindow(_width, _height, "Hypoxia", NULL, NULL);
+  _handle = glfwCreateWindow(_width, _height, "ballsack", NULL, NULL);
   if (!_handle) {
     Logger::error("Window", "glfwCreateWindow() failed.");
     glfwTerminate();
@@ -45,10 +49,6 @@ Window::Window()
   glEnable(GL_MULTISAMPLE);
   //glEnable(GL_FRAMEBUFFER_SRGB);
 
-  //glfwSetKeyCallback(_handle, keybind_manager::key_callback);
-  //glfwSetCursorPosCallback(_handle, keybind_manager::cursor_position_callback);
-  //glfwSetMouseButtonCallback(_handle, keybind_manager::mouse_button_callback);
-  //glfwSetScrollCallback(_handle, keybind_manager::scroll_callback);
 
   Logger::message("Window", "Created successfully");
   return;
@@ -94,4 +94,24 @@ glm::vec2 Window::calc_ndc()
     2 * x / _width - 1,
     1 - 2 * y / _height
   );
+}
+
+void Window::set_key_callback(GLFWkeyfun key_callback)
+{
+  glfwSetKeyCallback(_handle, key_callback);
+}
+
+void Window::set_cursor_pos_callback(GLFWcursorposfun cursor_position_callback)
+{
+  glfwSetCursorPosCallback(_handle, cursor_position_callback);
+}
+
+void Window::set_mouse_button_callback(GLFWmousebuttonfun mouse_button_callback)
+{
+  glfwSetMouseButtonCallback(_handle, mouse_button_callback);
+}
+
+void Window::set_scroll_callback(GLFWscrollfun scroll_callback)
+{
+  glfwSetScrollCallback(_handle, scroll_callback);
 }

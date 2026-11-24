@@ -7,7 +7,7 @@ in vec3 pass_normal;
 out vec4 color;
 
 vec3 hashColor(int id) {
-    uint x = uint(id);
+    uint x = uint(id) + 1u;
     // Jenkins' one-at-a-time hash variant for good bit dispersion
     x += (x << 10u);
     x ^= (x >> 6u);
@@ -24,5 +24,5 @@ vec3 hashColor(int id) {
 }
 
 void main() {
-	color = vec4(hashColor(gl_PrimitiveID), 1.0);
+  color = vec4(hashColor(gl_PrimitiveID), 1.0);
 }

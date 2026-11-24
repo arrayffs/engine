@@ -2,9 +2,15 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 set(ENGINE_SOURCES
     src/Engine.cpp
+    src/Asset/Asset.cpp
+    src/Asset/AssetManager.cpp
     src/Asset/Mesh.cpp
+    src/CorePlugin/Camera/Camera.cpp
+    src/CorePlugin/Camera/OrbitalCamera.cpp
+    src/GameWorld/BaseObject.cpp
     src/Lighting/Program.cpp
     src/Lighting/ProgramFactory.cpp
+    src/Utility/Singleton.cpp
     src/Window/Window.cpp
 )
 
@@ -13,6 +19,10 @@ set(ENGINE_HEADERS
     Include/Asset/Asset.h
     Include/Asset/AssetManager.h
     Include/Asset/Mesh.h
+    Include/CorePlugin/Camera/Camera.h
+    Include/CorePlugin/Camera/OrbitalCamera.h
+    Include/GameWorld/BaseObject.h
+    Include/GameWorld/GameWorld.h
     Include/Lighting/Program.h
     Include/Lighting/ProgramFactory.h
     Include/Material/Material.h

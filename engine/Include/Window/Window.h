@@ -27,6 +27,11 @@ public:
 
   float width() const { return _width; }
   float height() const { return _height; }
+
+  void set_key_callback(GLFWkeyfun key_callback);
+  void set_cursor_pos_callback(GLFWcursorposfun cursor_position_callback);
+  void set_mouse_button_callback(GLFWmousebuttonfun mouse_button_callback);
+  void set_scroll_callback(GLFWscrollfun scroll_callback);
 };
 
 #endif // !_WINDOW_H_

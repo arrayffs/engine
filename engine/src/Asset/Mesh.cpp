@@ -23,6 +23,25 @@ Mesh::Mesh(std::vector<vertex_t> vertexes, std::vector<uint32_t> indices)
 
   glEnableVertexAttribArray(2);
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, _tex));
+
+
+  glm::vec3 min = vertexes[0]._world;
+  glm::vec3 max = vertexes[0]._world;
+
+  for (auto& v : vertexes) {
+    auto& w = v._world;
+
+    if (min.x > w.x) min.x = w.x;
+    if (min.y > w.y) min.y = w.y;
+    if (min.z > w.z) min.z = w.z;
+
+    if (max.x < w.x) max.x = w.x;
+    if (max.y < w.y) max.y = w.y;
+    if (max.z < w.z) max.z = w.z;
+  }
+
+  _bounding_box.first = min;
+  _bounding_box.second = max;
 }
 
 void Mesh::bind()
@@ -30,10 +49,8 @@ void Mesh::bind()
   glBindVertexArray(_vao);
 }
 
-void Mesh::render(glm::mat4& model, glm::mat4& view, glm::mat4& proj)
+void Mesh::render()
 {
   bind();
-
-  
   glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, nullptr);
 }
