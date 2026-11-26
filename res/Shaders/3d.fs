@@ -4,6 +4,8 @@ in vec3 pass_frag;
 in vec2 pass_texture;
 in vec3 pass_normal;
 
+uniform int u_hovered;
+
 out vec4 color;
 
 vec3 hashColor(int id) {
@@ -25,4 +27,6 @@ vec3 hashColor(int id) {
 
 void main() {
   color = vec4(hashColor(gl_PrimitiveID), 1.0);
+  if (u_hovered == 1)
+    color += vec4(0.3, 0.0, 0.6, 0.0);
 }

@@ -8,6 +8,7 @@ set(ENGINE_SOURCES
     src/CorePlugin/Camera/Camera.cpp
     src/CorePlugin/Camera/OrbitalCamera.cpp
     src/GameWorld/BaseObject.cpp
+    src/Lighting/Raycast/Raycast.cpp
     src/Lighting/Program.cpp
     src/Lighting/ProgramFactory.cpp
     src/Utility/Singleton.cpp
@@ -23,6 +24,7 @@ set(ENGINE_HEADERS
     Include/CorePlugin/Camera/OrbitalCamera.h
     Include/GameWorld/BaseObject.h
     Include/GameWorld/GameWorld.h
+    Include/Lighting/Raycast/Raycast.h
     Include/Lighting/Program.h
     Include/Lighting/ProgramFactory.h
     Include/Material/Material.h

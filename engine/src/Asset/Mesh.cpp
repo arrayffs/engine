@@ -25,10 +25,10 @@ Mesh::Mesh(std::vector<vertex_t> vertexes, std::vector<uint32_t> indices)
   glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex_t), (void*)offsetof(vertex_t, _tex));
 
 
-  glm::vec3 min = vertexes[0]._world;
-  glm::vec3 max = vertexes[0]._world;
+  glm::vec3 min = _vertex[0]._world;
+  glm::vec3 max = _vertex[0]._world;
 
-  for (auto& v : vertexes) {
+  for (auto& v : _vertex) {
     auto& w = v._world;
 
     if (min.x > w.x) min.x = w.x;

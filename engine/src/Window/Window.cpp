@@ -19,7 +19,7 @@ Window::Window()
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_SAMPLES, 16);
 
-  _handle = glfwCreateWindow(_width, _height, "ballsack", NULL, NULL);
+  _handle = glfwCreateWindow(_width, _height, "a", NULL, NULL);
   if (!_handle) {
     Logger::error("Window", "glfwCreateWindow() failed.");
     glfwTerminate();

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Asset/AssetManager.h>
 
 class BaseObject
@@ -22,4 +24,5 @@ public:
   glm::vec3 get_position() const { return _position; }
 
   void render(int u_position);
+  AssetIdentifier get_id() const { return _asset_id; }
 };

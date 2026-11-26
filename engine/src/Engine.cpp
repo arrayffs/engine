@@ -4,6 +4,7 @@
 
 #include <Utility/Logger.h>
 #include <Lighting/Program.h>
+#include <Lighting/Raycast/Raycast.h>
 
 bool Engine::init()
 {
@@ -50,7 +51,13 @@ bool Engine::draw_frame()
   glUniformMatrix4fv(u_view, 1, GL_FALSE, glm::value_ptr(_view));
 
   int u_position = glGetUniformLocation(program.get_id(), "u_position");
-  for (auto& obj : _world._objects) {
+  int u_hovered = glGetUniformLocation(program.get_id(), "u_hovered");
+
+  static Raycast* raycast = Raycast::inst();
+  BaseObject* hovered_object = raycast->get_hovered_object(_window.calc_ndc());
+
+  for (BaseObject* obj : _world._objects) {
+    glUniform1i(u_hovered, hovered_object == obj ? 1 : 0);
     obj->render(u_position);
   }
 
